@@ -60,34 +60,31 @@ export default {
     }
   },
   methods: {
-    login() {
-      this.$router.push('/')
-    },
-    async submit() {
-      const payload = {
-        email: this.email,
-        password: this.password,
-      }
-
-      const response = await this.$axios.post(
-        'https://virtserver.swaggerhub.com/gozza/Payment-Point/1.0.0-beta/api/users/login',
-        payload
-      )
-
-      this.$cookies.set('token', response.data.token, {
-        path: '/',
-      })
-
-      console.log(response)
-
-      await this.$router.push('/')
-    },
-    // submit() {
-    //   this.$store.dispatch('authentication/fetchLogin', {
+    // async submit() {
+    //   const payload = {
     //     email: this.email,
     //     password: this.password,
+    //   }
+
+    //   const response = await this.$axios.post(
+    //     'https://virtserver.swaggerhub.com/gozza/Payment-Point/1.0.0-beta/api/users/login',
+    //     payload
+    //   )
+
+    //   this.$cookies.set('token', response.data.token, {
+    //     path: '/',
     //   })
+
+    //   console.log(response)
+
+    //   await this.$router.push('/')
     // },
+    submit() {
+      this.$store.dispatch('authentication/fetchLogin', {
+        email: this.email,
+        password: this.password,
+      })
+    },
   },
 }
 </script>
