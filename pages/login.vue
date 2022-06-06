@@ -7,35 +7,40 @@
       <div class="heading-1 mb-10 text-center">Login</div>
       <form @submit.prevent="submit">
         <div class="body-regular-2 mb-2">Email</div>
-        <validation-provider name="email" rules="required|email">
-          <v-text-field
-            v-model="email"
-            label="Masukan email anda"
-            required
-            solo
-          ></v-text-field>
-        </validation-provider>
+
+        <v-text-field
+          v-model="email"
+          label="Masukan email anda"
+          required
+          solo
+        ></v-text-field>
 
         <div class="body-regular-2 mb-2">Kata Sandi</div>
-        <validation-provider name="password" rules="required|email">
-          <v-text-field
-            v-model="password"
-            label="Masukan kata sandi anda"
-            required
-            solo
-            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-            :type="showPassword ? 'text' : 'password'"
-            @click:append="showPassword = !showPassword"
-          ></v-text-field>
-        </validation-provider>
+
+        <v-text-field
+          v-model="password"
+          label="Masukan kata sandi anda"
+          required
+          solo
+          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+          :type="showPassword ? 'text' : 'password'"
+          @click:append="showPassword = !showPassword"
+        ></v-text-field>
 
         <div class="text-center">
-          <!-- <v-btn type="submit" color="#528bcc" dark large class="px-10">
-            Login
-          </v-btn> -->
-          <v-btn @click="login" color="#528bcc" dark large class="px-10">
+          <v-btn
+            type="submit"
+            name="submit"
+            color="#528bcc"
+            dark
+            large
+            class="px-10"
+          >
             Login
           </v-btn>
+          <!-- <v-btn @click="login" color="#528bcc" dark large class="px-10">
+            Login
+          </v-btn> -->
         </div>
       </form>
     </v-col>
@@ -51,18 +56,38 @@ export default {
       showPassword: false,
       email: '',
       password: '',
+      token: '',
     }
   },
   methods: {
     login() {
       this.$router.push('/')
     },
-    submit() {
-      this.$store.dispatch('authentication/fetchLogin', {
+    async submit() {
+      const payload = {
         email: this.email,
         password: this.password,
+      }
+
+      const response = await this.$axios.post(
+        'https://virtserver.swaggerhub.com/gozza/Payment-Point/1.0.0-beta/api/users/login',
+        payload
+      )
+
+      this.$cookies.set('token', response.data.token, {
+        path: '/',
       })
+
+      console.log(response)
+
+      await this.$router.push('/')
     },
+    // submit() {
+    //   this.$store.dispatch('authentication/fetchLogin', {
+    //     email: this.email,
+    //     password: this.password,
+    //   })
+    // },
   },
 }
 </script>

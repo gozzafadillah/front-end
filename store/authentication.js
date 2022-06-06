@@ -9,7 +9,7 @@ const mutations = {
 }
 
 const actions = {
-  validateToken(store, param) {
+  setToken(store, param) {
     store.commit('setToken', param)
   },
 
@@ -26,6 +26,7 @@ const actions = {
       path: '/',
       maxAge: 60 * 60 * 24 * 7,
     })
+
     store.commit('setToken', response.data.token)
 
     this.$router.push('/')
