@@ -14,7 +14,7 @@ const actions = {
     // Fetch Logic
     this.$axios
       .get(
-        'https://virtserver.swaggerhub.com/gozza/Payment-Point/1.0.0/api/product/1'
+        'https://virtserver.swaggerhub.com/gozza/Payment-Point/1.0.0-beta/api/product'
       )
       .then((response) => {
         store.commit('setListProduct', response.data)
