@@ -40,7 +40,7 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-
+    '@nuxtjs/proxy',
     'cookie-universal-nuxt',
   ],
 
@@ -48,6 +48,11 @@ export default {
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: '/',
+    proxy: true,
+  },
+
+  proxy: {
+    '/api': 'http://localhost:19000',
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
