@@ -14,8 +14,8 @@ const actions = {
   },
   async fetchLogin(store, param) {
     const response = await this.$axios.post(
-      // 'https://virtserver.swaggerhub.com/gozza/Payment-Point/1.0.0-beta/api/users/login',
-      'http://localhost:19000/login',
+      'https://virtserver.swaggerhub.com/gozza/Payment-Point/1.0.0-beta/api/users/login',
+      // 'http://3.0.50.89:19000/login',
       {
         username: param.email,
         password: param.password,
