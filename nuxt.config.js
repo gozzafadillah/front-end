@@ -43,6 +43,7 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     '@nuxtjs/proxy',
+    '@nuxtjs/composition-api/module',
     'cookie-universal-nuxt',
   ],
 
@@ -53,6 +54,7 @@ export default {
     proxy: true,
   },
 
+  // Proxy module configuration: https://go.nuxtjs.dev/config-proxy
   proxy: {
     '/api': 'http://localhost:19000',
   },
