@@ -32,6 +32,8 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+
+    'cookie-universal-nuxt',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -40,9 +42,9 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    //
     '@nuxtjs/proxy',
     '@nuxtjs/composition-api/module',
+    'cookie-universal-nuxt',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -54,7 +56,7 @@ export default {
 
   // Proxy module configuration: https://go.nuxtjs.dev/config-proxy
   proxy: {
-    '/api ': 'http://localhost:19000',
+    '/api': 'http://localhost:19000',
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

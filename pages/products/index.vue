@@ -27,5 +27,6 @@ export default {
       this.$store.dispatch('products/fetchProduct')
     },
   },
+  middleware: ['auth'],
 }
 </script>
