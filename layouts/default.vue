@@ -23,9 +23,12 @@
                 justify-center
               >
                 <v-list-item-content>
-                  <v-avatar size="36" width="64">
-                    <v-icon>{{ item.icon }}</v-icon>
-                  </v-avatar>
+                  <v-list-item-title>
+                    <v-avatar size="36" width="64">
+                      <v-icon>{{ item.icon }}</v-icon>
+                    </v-avatar>
+                    {{ item.title }}
+                  </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </template>
