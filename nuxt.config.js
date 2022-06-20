@@ -6,7 +6,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s | Bayeue',
+    titleTemplate: '%s',
     title: 'Bayeue',
     meta: [
       { charset: 'utf-8' },
@@ -32,6 +32,8 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+
+    'cookie-universal-nuxt',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -40,12 +42,21 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    '@nuxtjs/proxy',
+    '@nuxtjs/composition-api/module',
+    'cookie-universal-nuxt',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: '/',
+    proxy: true,
+  },
+
+  // Proxy module configuration: https://go.nuxtjs.dev/config-proxy
+  proxy: {
+    '/api': 'http://localhost:19000',
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

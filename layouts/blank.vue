@@ -1,9 +1,7 @@
 <template>
-  <v-row>
-    <v-main>
-      <Nuxt />
-    </v-main>
-  </v-row>
+  <v-app light>
+    <Nuxt />
+  </v-app>
 </template>
 <script>
 export default {
