@@ -1,14 +1,14 @@
 <template>
-  <v-app>
+  <v-app light>
     <v-navigation-drawer v-model="drawer" fixed app>
       <v-layout column justify-center justify-space-between fill-height>
         <div>
           <v-list-item>
             <v-list-item-content>
               <div class="text-center">
-                <div>
+                <NuxtLink to="/">
                   <img src="assets/img/bayeue.png" alt="alt" width="180" />
-                </div>
+                </NuxtLink>
               </div>
             </v-list-item-content>
           </v-list-item>
@@ -20,7 +20,6 @@
                 :to="`/${item.link}`"
                 :title="item.title"
                 nuxt
-                router
                 justify-center
               >
                 <v-list-item-content>
@@ -77,11 +76,16 @@
       </v-layout>
     </v-navigation-drawer>
 
-    <v-app-bar flat app fixed color="#fff">
+    <v-app-bar flat app fixed color="#">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-app-bar-title v-if="drawer == false" transition="scale-transition">
+        <Nuxt-Link to="/" class="font-weight-black text-decoration-none">
+          <span class="brand">Bayeue</span>
+        </Nuxt-Link>
+      </v-app-bar-title>
     </v-app-bar>
 
-    <v-main>
+    <v-main class="main">
       <v-container>
         <div class="container">
           <v-row>
@@ -114,7 +118,6 @@
             </v-col>
           </v-row>
         </div>
-
         <Nuxt />
       </v-container>
     </v-main>
@@ -147,4 +150,12 @@ export default {
   },
 }
 </script>
-<style lang="sass" scoped></style>
+<style lang="scss" scoped>
+.main {
+  height: 100vh;
+  background-color: $bayeue-light;
+}
+.brand {
+  color: $bayeue-primary;
+}
+</style>
