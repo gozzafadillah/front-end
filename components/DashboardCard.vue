@@ -27,8 +27,8 @@ export default {
       default: 'Title',
     },
     count: {
-      type: String,
-      default: '0',
+      type: Number,
+      default: 0,
     },
     colorIcon: {
       type: String,
