@@ -1,6 +1,6 @@
 <template>
-  <v-app dark>
-    <v-navigation-drawer app permanent floating>
+  <v-app>
+    <v-navigation-drawer v-model="drawer" fixed app>
       <v-layout column justify-center justify-space-between fill-height>
         <div>
           <v-list-item>
@@ -20,6 +20,7 @@
                 :to="`/${item.link}`"
                 :title="item.title"
                 nuxt
+                router
                 justify-center
               >
                 <v-list-item-content>
@@ -76,26 +77,14 @@
       </v-layout>
     </v-navigation-drawer>
 
-    <v-app-bar flat app fixed>
-      <v-toolbar-title>Dashboard</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <div>
-        <v-text-field
-          name="search"
-          placeholder="Searching here!"
-          filled
-          small
-          solo-inverted
-          hide-details
-          flat
-          dense
-          prepend-inner-icon="mdi-magnify"
-        />
-      </div>
+    <v-app-bar flat app fixed color="#fff">
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
     </v-app-bar>
 
     <v-main>
-      <Nuxt />
+      <v-container>
+        <Nuxt />
+      </v-container>
     </v-main>
   </v-app>
 </template>
@@ -105,6 +94,9 @@ export default {
   name: 'DefaultLayout',
   data() {
     return {
+      clipped: false,
+      drawer: false,
+      fixed: false,
       user: {
         name: 'Nanda HM',
         avatar: 'icon.png',
