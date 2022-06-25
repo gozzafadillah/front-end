@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Products</h1>
     <div v-for="(product, index) in productList" :key="(product.name, index)">
       <div>{{ product.code }}</div>
       <div>{{ product.name }}</div>
@@ -8,37 +7,6 @@
       <div>{{ product.price }}</div>
       <div>{{ product.category_id }}</div>
       <div>{{ product.status }}</div>
-    </div>
-    <div class="container">
-      <v-row>
-        <v-col>
-          <CategoryCard icon="mdi-account" title="Admins" :count="2" />
-        </v-col>
-        <v-col>
-          <CategoryCard
-            icon="mdi-account-multiple"
-            title="Costumers"
-            :count="10"
-          />
-        </v-col>
-        <v-col>
-          <CategoryCard
-            title="Transactions"
-            icon="mdi-swap-horizontal"
-            :count="10"
-          />
-        </v-col>
-        <v-col>
-          <CategoryCard
-            color-icon="#fff"
-            dark
-            color="primary"
-            title="Products"
-            icon="mdi-cube"
-            :count="3"
-          />
-        </v-col>
-      </v-row>
     </div>
 
     <div class="container">
@@ -125,12 +93,9 @@
   </div>
 </template>
 <script>
-import CategoryCard from '@/components/CategoryCard.vue'
 export default {
   name: 'ProductPage',
-  components: {
-    CategoryCard,
-  },
+  components: {},
   middleware: ['auth'],
   data() {
     return {}

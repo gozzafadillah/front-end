@@ -1,14 +1,14 @@
 <template>
-  <v-app dark>
-    <v-navigation-drawer app permanent floating>
+  <v-app light>
+    <v-navigation-drawer v-model="drawer" fixed app>
       <v-layout column justify-center justify-space-between fill-height>
         <div>
           <v-list-item>
             <v-list-item-content>
               <div class="text-center">
-                <div>
+                <NuxtLink to="/">
                   <img src="assets/img/bayeue.png" alt="alt" width="180" />
-                </div>
+                </NuxtLink>
               </div>
             </v-list-item-content>
           </v-list-item>
@@ -76,26 +76,51 @@
       </v-layout>
     </v-navigation-drawer>
 
-    <v-app-bar flat app fixed>
-      <v-toolbar-title>Dashboard</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <div>
-        <v-text-field
-          name="search"
-          placeholder="Searching here!"
-          filled
-          small
-          solo-inverted
-          hide-details
-          flat
-          dense
-          prepend-inner-icon="mdi-magnify"
-        />
-      </div>
+    <v-app-bar flat app fixed color="#">
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-app-bar-title v-if="drawer == false" transition="scale-transition">
+        <Nuxt-Link to="/" class="font-weight-black text-decoration-none">
+          <span class="brand">Bayeue</span>
+        </Nuxt-Link>
+      </v-app-bar-title>
     </v-app-bar>
 
-    <v-main>
-      <Nuxt />
+    <v-main class="main">
+      <v-container>
+        <v-layout row wrap justify-space-between>
+          <v-flex xs12 sm12 md3>
+            <DashboardCard icon="mdi-account" title="Admins" :count="2" />
+          </v-flex>
+          <v-flex xs12 sm12 md3>
+            <DashboardCard
+              icon="mdi-account-multiple"
+              title="Costumers"
+              :count="10"
+            />
+          </v-flex>
+          <v-flex xs12 sm12 md3>
+            <DashboardCard
+              title="Transactions"
+              icon="mdi-swap-horizontal"
+              :count="10"
+            />
+          </v-flex>
+          <v-flex xs12 sm12 md3>
+            <DashboardCard
+              color-icon="#fff"
+              dark
+              color="primary"
+              title="Products"
+              icon="mdi-cube"
+              :count="3"
+            />
+          </v-flex>
+        </v-layout>
+      </v-container>
+
+      <v-container>
+        <Nuxt />
+      </v-container>
     </v-main>
   </v-app>
 </template>
@@ -105,6 +130,9 @@ export default {
   name: 'DefaultLayout',
   data() {
     return {
+      clipped: false,
+      drawer: false,
+      fixed: false,
       user: {
         name: 'Nanda HM',
         avatar: 'icon.png',
@@ -123,4 +151,12 @@ export default {
   },
 }
 </script>
-<style lang="sass" scoped></style>
+<style lang="scss" scoped>
+.main {
+  height: 100vh;
+  background-color: $bayeue-light;
+}
+.brand {
+  color: $bayeue-primary;
+}
+</style>
