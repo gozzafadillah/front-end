@@ -15,7 +15,7 @@
 </template>
 <script>
 export default {
-  name: 'CategoryCard',
+  name: 'DashboardCard',
   inheritAttrs: false,
   props: {
     icon: {
