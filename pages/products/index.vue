@@ -144,7 +144,7 @@
                 <v-col cols="2">
                     <v-card
                      class="text-center py-14"
-                     @click="addCategory()"
+                     to="/products/addCategory"
                      height="160"
                      color="primary"
                      dark
@@ -218,9 +218,11 @@
                     color="primary"
                     dark
                     >
-                        <v-icon x-large>
-                            mdi-plus-box
-                        </v-icon>               
+                        <v-btn icon to="/products/addProductPayment">
+                            <v-icon x-large>
+                                mdi-plus-box
+                            </v-icon>      
+                        </v-btn>         
                     </v-card>
                 </v-col>
             </v-row>
