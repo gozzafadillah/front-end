@@ -86,26 +86,26 @@
     </v-app-bar>
 
     <v-main class="main">
-      <v-container>
-        <v-layout row wrap justify-space-between>
-          <v-flex xs12 sm12 md3>
+      <v-container fluid>
+        <v-row wrap no-gutters>
+          <v-col cols="12" xs="6" sm="6" md="3">
             <DashboardCard icon="mdi-account" title="Admins" :count="2" />
-          </v-flex>
-          <v-flex xs12 sm12 md3>
+          </v-col>
+          <v-col cols="12" xs="6" sm="6" md="3">
             <DashboardCard
               icon="mdi-account-multiple"
               title="Costumers"
               :count="10"
             />
-          </v-flex>
-          <v-flex xs12 sm12 md3>
+          </v-col>
+          <v-col cols="12" xs="6" sm="6" md="3">
             <DashboardCard
               title="Transactions"
               icon="mdi-swap-horizontal"
               :count="10"
             />
-          </v-flex>
-          <v-flex xs12 sm12 md3>
+          </v-col>
+          <v-col cols="12" xs="6" sm="6" md="3">
             <DashboardCard
               color-icon="#fff"
               dark
@@ -114,11 +114,11 @@
               icon="mdi-cube"
               :count="3"
             />
-          </v-flex>
-        </v-layout>
+          </v-col>
+        </v-row>
       </v-container>
 
-      <v-container>
+      <v-container fluid>
         <Nuxt />
       </v-container>
     </v-main>
