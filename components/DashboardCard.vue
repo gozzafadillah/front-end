@@ -1,19 +1,19 @@
 <template>
   <v-container>
-    <v-card class="flat card ma-4" v-bind="$attrs" v-on="$listeners">
-      <v-layout wrap>
-        <v-flex xs3 align-self-center>
+    <v-card class="flat card" v-bind="$attrs" v-on="$listeners">
+      <v-row wrap>
+        <v-col cols="3" align-self-center>
           <v-icon class="justify-center" :color="colorIcon" x-large>{{
             icon
           }}</v-icon>
-        </v-flex>
-        <v-flex xs9>
+        </v-col>
+        <v-col cols="9">
           <v-card-title class="ma-0 pa-0"> {{ title }} </v-card-title>
           <v-card-text class="text-h4 ma-0 pa-0 font-weight-bold">
             {{ count }}
           </v-card-text>
-        </v-flex>
-      </v-layout>
+        </v-col>
+      </v-row>
     </v-card>
   </v-container>
 </template>
