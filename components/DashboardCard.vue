@@ -3,9 +3,9 @@
     <v-card class="flat card" v-bind="$attrs" v-on="$listeners">
       <v-row wrap>
         <v-col cols="3" align="center" align-self="center">
-          <v-icon class="justify-center" :color="colorIcon" x-large>{{
-            icon
-          }}</v-icon>
+          <v-icon class="justify-center" :color="colorIcon" x-large>
+            {{ icon }}
+          </v-icon>
         </v-col>
         <v-col cols="9">
           <v-card-title class="ma-0 pa-0"> {{ title }} </v-card-title>

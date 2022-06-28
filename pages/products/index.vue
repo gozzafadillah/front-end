@@ -8,22 +8,16 @@
         </v-col>
       </v-row>
       <v-row wrap>
-        <v-col cols="6" xs="4" sm="4" md="2" lg="1" xl="1">
-          <CategoryCard class="active__card" />
+        <v-col row cols="6">
+          <CategoryCard @click="showProductCard" />
         </v-col>
-        <v-col cols="6" xs="4" sm="4" md="2" lg="1" xl="1">
-          <CategoryCard />
-        </v-col>
-        <v-col cols="6" xs="4" sm="4" md="2" lg="1" xl="1">
-          <CategoryCard />
-        </v-col>
-        <v-col cols="6" xs="4" sm="4" md="2" lg="1" xl="1">
-          <CategoryCard />
+        <v-col cols="6">
+          <ButtonCard />
         </v-col>
       </v-row>
     </v-container>
 
-    <v-container v-if="showAddCategory == true">
+    <v-container v-if="showProduct">
       <v-row wrap no-gutters>
         <v-col cols="12" xs="4" sm="4" md="8">
           <v-card>
@@ -73,15 +67,17 @@
 </template>
 <script>
 import CategoryCard from '@/components/CategoryCard.vue'
+import ButtonCard from '@/components/ButtonCard.vue'
 export default {
   name: 'ProductPage',
   components: {
     CategoryCard,
+    ButtonCard,
   },
   middleware: ['auth'],
   data() {
     return {
-      showAddCategory: false,
+      showProduct: false,
       activeClass: 'active',
     }
   },
@@ -94,6 +90,11 @@ export default {
     this.fetchProductList()
   },
   methods: {
+    showProductCard() {
+      console.log('showedProductCard')
+      this.showProduct = !this.showProduct
+    },
+
     fetchProductList() {
       this.$store.dispatch('products/fetchProduct')
     },

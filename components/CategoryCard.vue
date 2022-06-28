@@ -7,16 +7,11 @@
   >
     <v-row wrap>
       <v-col align-self="center" justify="center" class="my-auto">
-        <v-img
-          class="mx-auto"
-          :lazy-src="lazySrc"
-          max-height="80"
-          max-width="80%"
-          align="center"
-          justify="center"
-          :src="imgPath"
-        >
-        </v-img>
+        <v-col cols="3" align="center" align-self="center">
+          <v-icon class="justify-center" :color="colorIcon" x-large>
+            {{ iconCategory }}
+          </v-icon>
+        </v-col>
         <v-card-actions class="mx-auto align-center text-center justify-center">
           {{ titleCategory }}
         </v-card-actions>
@@ -33,9 +28,9 @@ export default {
       type: String,
       default: 'https://picsum.photos/id/11/10/6',
     },
-    imgPath: {
+    iconCategory: {
       type: String,
-      default: 'https://picsum.photos/id/11/500/300',
+      default: 'mdi-folder',
     },
     titleCategory: {
       type: String,
