@@ -25,7 +25,9 @@
                 <v-list-item-content>
                   <v-list-item-title>
                     <v-avatar size="36" width="64">
-                      <v-icon>{{ item.icon }}</v-icon>
+                      <v-icon>
+                        {{ item.icon }}
+                      </v-icon>
                     </v-avatar>
                     {{ item.title }}
                   </v-list-item-title>
@@ -105,9 +107,9 @@ export default {
       },
       items: [
         { link: '', icon: 'mdi-view-dashboard', title: 'Overview' },
-        { link: 'products', icon: 'mdi-town-hall', title: 'Products' },
-        { link: 'transaction', icon: 'mdi-town-hall', title: 'Transaction' },
-        { link: 'account', icon: 'mdi-account-box-outline', title: 'Account' },
+        { link: 'products', icon: 'mdi-cube', title: 'Products' },
+        // { link: 'transaction', icon: 'mdi-town-hall', title: 'Transaction' },
+        // { link: 'account', icon: 'mdi-account-box-outline', title: 'Account' },
       ],
       accounts: [
         { link: 'setting', icon: 'mdi-cog-outline', title: 'Setting' },
