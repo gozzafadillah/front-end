@@ -42,8 +42,7 @@
 
 <script>
 export default {
-  name: 'addCategory',
-  layout: 'blank',
+  name: 'CreateCategoryPage',
 }
 </script>
 
