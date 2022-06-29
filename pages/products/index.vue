@@ -1,107 +1,146 @@
 <template>
-  <div>
-    <v-container>
-      <v-row wrap no-gutters>
-        <v-col>
-          <h1 class="headline font-weight-bold">Manage Product</h1>
-          <h2 class="title mb-2">Category</h2>
-        </v-col>
-      </v-row>
-      <v-row wrap>
-        <v-col cols="6" xs="4" sm="4" md="2" lg="1" xl="1">
-          <CategoryCard class="active__card" />
-        </v-col>
-        <v-col cols="6" xs="4" sm="4" md="2" lg="1" xl="1">
-          <CategoryCard />
-        </v-col>
-        <v-col cols="6" xs="4" sm="4" md="2" lg="1" xl="1">
-          <CategoryCard />
-        </v-col>
-        <v-col cols="6" xs="4" sm="4" md="2" lg="1" xl="1">
-          <CategoryCard />
-        </v-col>
-      </v-row>
-    </v-container>
+  <v-container>
+    <v-row dense wrap>
+      <v-col cols="12" xs="6" sm="6" md="3">
+        <DashboardCard icon="mdi-account" title="Admins" :count="2" />
+      </v-col>
+      <v-col cols="12" xs="6" sm="6" md="3">
+        <DashboardCard
+          icon="mdi-account-multiple"
+          title="Costumers"
+          :count="10"
+        />
+      </v-col>
+      <v-col cols="12" xs="6" sm="6" md="3">
+        <DashboardCard
+          title="Transactions"
+          icon="mdi-swap-horizontal"
+          :count="10"
+        />
+      </v-col>
+      <v-col cols="12" xs="6" sm="6" md="3">
+        <DashboardCard
+          dark
+          :color-icon="'#fff'"
+          title="Products"
+          icon="mdi-cube"
+          :count="3"
+        />
+      </v-col>
+    </v-row>
 
-    <v-container v-if="showAddCategory == true">
-      <v-row wrap no-gutters>
-        <v-col cols="12" xs="4" sm="4" md="8">
-          <v-card>
-            <v-card-title> Payment </v-card-title>
-            <v-row>
-              <v-col cols="2">
-                <v-card class="mx-auto my-4 text-center" max-width="114">
-                  <img src="@/assets/img/listrik.png" class="pt-4" />
-                  <div class="body-1 font-weight-bold pb-4">Listrik</div>
-                </v-card>
-              </v-col>
-              <v-col cols="2">
-                <v-card class="mx-auto my-4 text-center" max-width="114">
-                  <img src="@/assets/img/paketdata.png" class="pt-4" />
-                  <div class="body-1 font-weight-bold pb-4">Paket Data</div>
-                </v-card>
-              </v-col>
-              <v-col cols="2">
-                <v-card class="mx-auto my-4 text-center" max-width="114">
-                  <img src="@/assets/img/pulsa.png" class="pt-4" />
-                  <div class="body-1 font-weight-bold pb-4">Pulsa</div>
-                </v-card>
-              </v-col>
-              <v-col cols="2">
-                <v-card
-                  class="mx-auto my-4 text-center py-8"
-                  max-width="114"
-                  color="primary"
-                  dark
-                >
-                  <v-icon x-large> mdi-plus-box </v-icon>
-                </v-card>
-              </v-col>
-            </v-row>
+    <v-row dense wrap>
+      <v-col class="my-4">
+        <h1 class="headline font-weight-bold">Manage Product</h1>
+        <h2 class="title">Category</h2>
+      </v-col>
+    </v-row>
 
-            <div class="text-right pr-4 pb-4">
-              <v-btn color="red" large dark>
-                <v-icon class="mr-2"> mdi-close </v-icon>
-                Close
-              </v-btn>
-            </div>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-  </div>
+    <v-row dense wrap>
+      <v-col
+        v-for="category in categories"
+        :key="category.name"
+        cols="6"
+        xs="4"
+        sm="4"
+        md="2"
+        lg="2"
+        xl="2"
+      >
+        <CategoryCard
+          :category-icon="category.icon"
+          :category-name="category.name"
+          @click="showProductCard"
+        />
+      </v-col>
+      <v-col cols="6" xs="4" sm="4" md="2" lg="2" xl="2">
+        <ButtonCard height="145" @click="newCategory" />
+      </v-col>
+    </v-row>
+
+    <v-row v-if="showProduct" wrap>
+      <v-col cols="12">
+        <v-card>
+          <v-card-title>Category Name</v-card-title>
+          <v-row dense wrap>
+            <v-col
+              v-for="product in products"
+              :key="product.name"
+              cols="6"
+              xs="4"
+              sm="4"
+              md="1"
+              lg="1"
+              xl="1"
+            >
+              <ProductCard
+                :product-name="product.name"
+                @click="productDetail"
+              />
+            </v-col>
+            <v-col cols="6" xs="4" sm="4" md="1" lg="1" xl="1">
+              <ButtonCard height="100" @click="newProduct" />
+            </v-col>
+          </v-row>
+
+          <div class="text-right pr-4 pb-4">
+            <v-btn color="red" large dark @click="showProductCard">
+              <v-icon class="mr-2"> mdi-close </v-icon>
+              Close
+            </v-btn>
+          </div>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 <script>
 import CategoryCard from '@/components/CategoryCard.vue'
+import ProductCard from '@/components/ProductCard.vue'
+import ButtonCard from '@/components/ButtonCard.vue'
+
 export default {
   name: 'ProductPage',
   components: {
     CategoryCard,
+    ProductCard,
+    ButtonCard,
   },
-  middleware: ['auth'],
+  // middleware: ['auth'],
   data() {
     return {
-      showAddCategory: false,
-      activeClass: 'active',
+      showProduct: false,
     }
   },
   computed: {
-    productList() {
+    products() {
       return this.$store.state.products.listProduct
+    },
+    categories() {
+      return this.$store.state.categories.listCategory
     },
   },
   mounted() {
     this.fetchProductList()
   },
   methods: {
+    newCategory() {
+      this.$router.push('/categories/create')
+    },
+    showProductCard() {
+      this.showProduct = !this.showProduct
+    },
+    newProduct() {
+      this.$router.push('/products/create')
+    },
+    productDetail() {
+      this.$router.push('/products/detail')
+    },
+
+    // API
     fetchProductList() {
       this.$store.dispatch('products/fetchProduct')
     },
   },
 }
 </script>
-<style lang="scss" scoped>
-.active__card {
-  border: 2px solid $bayeue-primary;
-}
-</style>

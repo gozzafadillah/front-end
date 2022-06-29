@@ -1,6 +1,10 @@
 const state = () => ({
-  listProduct: [],
-  productDetail: {},
+  listProduct: [
+    {
+      id: 1,
+      name: 'Product 1',
+    },
+  ],
 })
 
 const mutations = {
@@ -18,7 +22,7 @@ const actions = {
         'http://3.0.50.89:19000/products'
       )
       .then((response) => {
-        store.commit('setListProduct', response.data.result)
+        store.commit('setListProduct', response.data)
       })
       .catch((error) => {
         console.log('erorr: ', error)
