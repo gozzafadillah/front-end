@@ -5,6 +5,7 @@
         <v-col cols="7">
           <v-card height="467">
             <v-card-title> Sales </v-card-title>
+
             <v-card-content>
               <v-sparkline
                 :value="value"
@@ -109,7 +110,6 @@
         <v-col cols="5">
           <v-card height="467">
             <v-card-title> Top User </v-card-title>
-
             <template>
               <v-simple-table>
                 <template v-slot:default>
@@ -123,7 +123,6 @@
                           {{ item.category }}
                         </div>
                       </td>
-
                       <td>
                         <h3 class="text-right">
                           {{ item.transaction }} Transaction
@@ -263,6 +262,7 @@ export default {
           status: 'In progress',
         },
       ],
+
       width: 2,
       radius: 10,
       padding: 8,
