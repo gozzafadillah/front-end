@@ -1,20 +1,13 @@
 <template>
-  <v-card
-    class="flat card mx-auto"
-    max-width="400"
-    v-bind="$attrs"
-    v-on="$listeners"
-  >
-    <v-row wrap>
-      <v-col align-self="center" justify="center" class="my-auto">
-        <v-col cols="3" align="center" align-self="center">
-          <v-icon class="justify-center" :color="colorIcon" x-large>
-            {{ iconCategory }}
-          </v-icon>
-        </v-col>
-        <v-card-actions class="mx-auto align-center text-center justify-center">
-          {{ titleCategory }}
-        </v-card-actions>
+  <v-card class="flat card" height="145px" v-bind="$attrs" v-on="$listeners">
+    <v-row>
+      <v-col align="center" align-self="center">
+        <v-icon :color="colorIcon" x-large>
+          {{ categoryIcon }}
+        </v-icon>
+        <v-card-text class="font-weight-bold ma-0 pa-0">
+          {{ categoryName }}
+        </v-card-text>
       </v-col>
     </v-row>
   </v-card>
@@ -24,15 +17,11 @@ export default {
   name: 'CategoryCard',
   inheritAttrs: false,
   props: {
-    lazySrc: {
-      type: String,
-      default: 'https://picsum.photos/id/11/10/6',
-    },
-    iconCategory: {
+    categoryIcon: {
       type: String,
       default: 'mdi-folder',
     },
-    titleCategory: {
+    categoryName: {
       type: String,
       default: 'Category',
     },
