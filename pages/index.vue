@@ -151,15 +151,9 @@ const gradients = [
 ]
 
 export default {
-  name: 'DashboardAdmin',
+  name: 'DashboardPage',
   data() {
     return {
-      drawer: false,
-      itemsDrawer: [
-        { title: 'Dashboard', icon: 'mdi-view-dashboard' },
-        { title: 'Admin', icon: 'mdi-account' },
-        { title: 'Product', icon: 'mdi-cube' },
-      ],
       dataTopProduct: [
         {
           name: 'Listrik',

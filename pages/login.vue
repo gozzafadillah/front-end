@@ -5,7 +5,7 @@
     </v-col>
     <v-col class="form-daftar px-10">
       <div class="heading-1 mb-10 text-center">Login</div>
-      <form @submit.prevent="submit">
+      <form @submit.prevent="handleSubmit">
         <div class="body-regular-2 mb-2">Email</div>
 
         <v-text-field
@@ -56,15 +56,16 @@ export default {
       showPassword: false,
       email: '',
       password: '',
-      token: '',
     }
   },
   methods: {
-    submit() {
-      this.$store.dispatch('authentication/fetchLogin', {
+    handleSubmit() {
+      this.$store.dispatch('auth/login', {
         email: this.email,
         password: this.password,
       })
+
+      this.$router.push('/')
     },
   },
 }
