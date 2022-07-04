@@ -39,7 +39,7 @@
                 <v-avatar size="40" color="grey lighten-4">
                   <img src="icon.png" alt="alt" />
                 </v-avatar>
-                <p class="pa-2">Nanda</p>
+                <p class="pa-2">{{ user }}</p>
               </div>
             </v-list-item-content>
           </v-list-item>
@@ -76,6 +76,7 @@ export default {
   name: 'DefaultLayout',
   data() {
     return {
+      user: '',
       items: [
         { link: '', icon: 'mdi-apps', title: 'Overview' },
         { link: 'products', icon: 'mdi-town-hall', title: 'Products' },
@@ -83,6 +84,22 @@ export default {
         { link: 'account', icon: 'mdi-account-box-outline', title: 'Account' },
       ],
     }
+  },
+  computed: {
+    getUser() {
+      return this.$store.state.user
+    },
+  },
+
+  async mounted() {
+    const response = await fetch('http://13.229.124.128:19000/admin/users', {
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+    })
+
+    const content = await response.json()
+
+    console.log(content)
   },
 }
 </script>

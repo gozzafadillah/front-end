@@ -21,6 +21,6 @@
 <script>
 export default {
   name: 'DashboardPage',
-  middleware: ['auth'],
+  // middleware: ['auth'],
 }
 </script>
