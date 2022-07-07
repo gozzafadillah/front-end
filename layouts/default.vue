@@ -98,9 +98,7 @@ export default {
   name: 'DefaultLayout',
   data() {
     return {
-      clipped: false,
       drawer: false,
-      fixed: false,
       user: {
         name: 'Nanda HM',
         avatar: 'icon.png',
@@ -108,8 +106,6 @@ export default {
       items: [
         { link: '', icon: 'mdi-view-dashboard', title: 'Overview' },
         { link: 'products', icon: 'mdi-cube', title: 'Products' },
-        // { link: 'transaction', icon: 'mdi-town-hall', title: 'Transaction' },
-        // { link: 'account', icon: 'mdi-account-box-outline', title: 'Account' },
       ],
       accounts: [
         { link: 'setting', icon: 'mdi-cog-outline', title: 'Setting' },

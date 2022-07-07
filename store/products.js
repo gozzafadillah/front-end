@@ -1,10 +1,5 @@
 const state = () => ({
-  listProduct: [
-    {
-      id: 1,
-      name: 'Product 1',
-    },
-  ],
+  listProduct: [],
 })
 
 const mutations = {
@@ -17,10 +12,7 @@ const actions = {
   fetchProduct(store) {
     // Fetch Logic
     this.$axios
-      .get(
-        // 'https://virtserver.swaggerhub.com/gozza/Payment-Point/1.0.0-beta/api/product'
-        'http://3.0.50.89:19000/products'
-      )
+      .get('products')
       .then((response) => {
         store.commit('setListProduct', response.data)
       })

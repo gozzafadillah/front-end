@@ -117,11 +117,12 @@ export default {
       return this.$store.state.products.listProduct
     },
     categories() {
-      return this.$store.state.categories.listCategory
+      return this.$store.state.categories.list
     },
   },
   mounted() {
-    this.fetchProductList()
+    this.fetchCategories()
+    // this.fetchCategoryList()
   },
   methods: {
     newCategory() {
@@ -138,8 +139,11 @@ export default {
     },
 
     // API
-    fetchProductList() {
-      this.$store.dispatch('products/fetchProduct')
+    // fetchProductList() {
+    //   this.$store.dispatch('products/fetchProduct')
+    // },
+    fetchCategories() {
+      this.$store.dispatch('categories/fetchList')
     },
   },
 }

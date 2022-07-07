@@ -220,37 +220,37 @@ export default {
       ],
       dataTransactions: [
         {
-          name: 'Payment from Bonnie Green',
+          name: 'Payment from Nanda',
           date: 'Apr 23, 2021',
           amount: 2300,
           status: 'Completed',
         },
         {
-          name: 'Payment refund to #00910',
+          name: 'Payment refund Alfath',
           date: 'Apr 23, 2021',
           amount: 2300,
           status: 'Completed',
         },
         {
-          name: 'Payment from Bonnie Green',
+          name: 'Payment from Reza',
           date: 'Apr 23, 2021',
           amount: -670,
           status: 'Completed',
         },
         {
-          name: 'Payment failed from #087651',
+          name: 'Payment failed Gisel',
           date: 'Apr 18  2021',
           amount: 234,
           status: 'Cancelled',
         },
         {
-          name: 'Payment from Bonnie Green',
+          name: 'Payment from Fadil',
           date: 'Apr 15, 2021',
           amount: 5000,
           status: 'In progress',
         },
         {
-          name: 'Payment from Bonnie Green',
+          name: 'Payment from Ghilman',
           date: 'Apr 15, 2021',
           amount: 2300,
           status: 'In progress',

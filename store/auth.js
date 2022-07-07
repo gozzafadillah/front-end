@@ -1,63 +1,52 @@
 export const state = () => ({
-  accessToken: null,
-  refreshToken: null,
+  token: null,
 })
 
-export const getters = {
-  isAuthenticated(state) {
-    return !!state.accessToken
-  },
-}
+// export const getters = {
+//   isAuthenticated(state) {
+//     return !!state.token
+//   },
+// }
 
 export const mutations = {
-  setTokens(state, { accessToken, refreshToken = null }) {
-    state.accessToken = accessToken
-
-    if (refreshToken) {
-      state.refreshToken = refreshToken
-    }
-  },
-  setUser(state, user) {
-    state.user = user
-  },
-  logout(state) {
-    state.accessToken = null
-    state.refreshToken = null
-    state.user = null
+  setToken(state, param) {
+    state.token = param
   },
 }
 
 export const actions = {
-  async login({ commit, dispatch }, { email, password }) {
-    const res = await this.$axios.$post('/login', {
-      email,
-      password,
-    })
-
-    commit('setTokens', res)
-
-    await dispatch('getUser')
+  setToken(store, param) {
+    store.commit('setToken', param)
   },
-  async register({ commit, dispatch }, { username, password }) {
-    const res = await this.$axios.$post('/auth/register', {
-      username,
-      password,
-    })
 
-    commit('setTokens', res)
-    await dispatch('getUser')
-    this.$router.push('/')
+  async fetchLogin(store, param) {
+    try {
+      const res = await this.$api.$post('login', {
+        email: param.email,
+        password: param.password,
+      })
+
+      localStorage.setItem('token', res.result.jwt)
+      this.$router.push('/')
+    } catch (error) {}
+    // this.$axios
+    //   .post('http://127.0.0.1:8000/api/login', {
+    //     email: param.email,
+    //     password: param.password,
+    //   })
+    //   .then((res) => {
+    //     this.$cookies.set('token', res.data.result.jwt, {
+    //       path: '/',
+    //       maxAge: 60 * 60 * 24 * 7,
+    //     })
+
+    //     store.commit('setToken', res.data.result.jwt)
+    //     this.$router.push('/')
+    //   })
+    //   .catch((err) => console.log(err))
   },
-  async getUser({ commit }) {
-    const res = await this.$axios.$get('/admin/users')
 
-    commit('setUser', res)
-  },
-  async refresh({ state, commit }) {
-    const res = await this.$axios.$post('/auth/refresh', {
-      refreshToken: state.refreshToken,
-    })
-
-    commit('setTokens', res)
+  fetchLogout(store) {
+    localStorage.removeItem('token')
   },
 }

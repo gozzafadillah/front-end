@@ -10,7 +10,7 @@
 
         <v-text-field
           v-model="email"
-          label="Masukan email anda"
+          placeholder="Masukan email anda"
           required
           solo
         ></v-text-field>
@@ -19,7 +19,7 @@
 
         <v-text-field
           v-model="password"
-          label="Masukan kata sandi anda"
+          placeholder="Masukan kata sandi anda"
           required
           solo
           :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -38,9 +38,6 @@
           >
             Login
           </v-btn>
-          <!-- <v-btn @click="login" color="#528bcc" dark large class="px-10">
-            Login
-          </v-btn> -->
         </div>
       </form>
     </v-col>
@@ -58,14 +55,15 @@ export default {
       password: '',
     }
   },
+  mounted() {
+    this.$toast.show('Logging in...')
+  },
   methods: {
     handleSubmit() {
-      this.$store.dispatch('auth/login', {
+      this.$store.dispatch('auth/fetchLogin', {
         email: this.email,
         password: this.password,
       })
-
-      this.$router.push('/')
     },
   },
 }
