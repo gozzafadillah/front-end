@@ -179,18 +179,7 @@ export default {
       return this.$store.state.dataTransactions
     },
   },
-  created() {
-    // this.$api
-    //   .get('admin/product', {
-    //     headers: {
-    //       Accept: 'application/json',
-    //       'Content-type': 'application/json',
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.log(res)
-    //   })
-  },
+  created() {},
   methods: {
     getAuthenticated() {
       const authStatus = this.$store.dispatch.getters(['auth/isAuthenticated'])

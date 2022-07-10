@@ -22,6 +22,8 @@ export const actions = {
       .get('/api/category')
       .then((response) => {
         console.log(response.data.message)
+        const total = response.data.result.length
+        console.log(total)
         store.commit('setList', response.data.result)
       })
       .catch((error) => {

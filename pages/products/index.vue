@@ -2,13 +2,13 @@
   <v-container>
     <v-row dense wrap>
       <v-col cols="12" xs="6" sm="6" md="3">
-        <DashboardCard icon="mdi-account" title="Admins" :count="2" />
+        <DashboardCard icon="mdi-account" title="Admins" :count="1" />
       </v-col>
       <v-col cols="12" xs="6" sm="6" md="3">
         <DashboardCard
           icon="mdi-account-multiple"
           title="Costumers"
-          :count="10"
+          :count="countCustomers"
         />
       </v-col>
       <v-col cols="12" xs="6" sm="6" md="3">
@@ -24,7 +24,7 @@
           :color-icon="'#fff'"
           title="Products"
           icon="mdi-cube"
-          :count="3"
+          :count="countProducts"
         />
       </v-col>
     </v-row>
@@ -113,6 +113,12 @@ export default {
     }
   },
   computed: {
+    countCustomers() {
+      return this.$store.getters['customers/list'].length
+    },
+    countProducts() {
+      return this.$store.getters['products/list'].length
+    },
     categories() {
       return this.$store.getters['categories/list']
     },
@@ -124,7 +130,9 @@ export default {
     },
   },
   mounted() {
+    this.fetchListCustomer()
     this.fetchListCategory()
+    this.fetchListProduct()
   },
   methods: {
     createCategory() {
@@ -139,8 +147,14 @@ export default {
     productDetail() {
       this.$router.push('/products/detail')
     },
+    fetchListCustomer() {
+      this.$store.dispatch('customers/fetchList')
+    },
     fetchListCategory() {
       this.$store.dispatch('categories/fetchList')
+    },
+    fetchListProduct() {
+      this.$store.dispatch('products/fetchList')
     },
     fetchListProducyByCategory(categoryId) {
       this.$store.dispatch('products/fetchListByCategory', categoryId)
