@@ -1,21 +1,33 @@
+// State
 export const state = () => ({
-  listCategory: [
-    {
-      id: 1,
-      name: 'Pulsa',
-      icon: 'mdi-phone',
-    },
-  ],
-  showProducts: false,
+  list: [],
 })
 
+// Getters
+export const getters = {
+  list: (state) => state.list,
+}
+
+// Mutations
 export const mutations = {
-  setListCategory(state, param) {
-    state.listCategory = param
-  },
-  setShowProducts(state, param) {
-    state.showProducts = param
+  setList(state, param) {
+    state.list = param
   },
 }
 
-export const actions = {}
+// Actions
+export const actions = {
+  fetchList(store) {
+    this.$axios
+      .get('/api/category')
+      .then((response) => {
+        console.log(response.data.message)
+        const total = response.data.result.length
+        console.log(total)
+        store.commit('setList', response.data.result)
+      })
+      .catch((error) => {
+        console.log('error: ', error)
+      })
+  },
+}

@@ -5,12 +5,12 @@
     </v-col>
     <v-col class="form-daftar px-10">
       <div class="heading-1 mb-10 text-center">Login</div>
-      <form @submit.prevent="submit">
+      <form @submit.prevent="handleSubmit">
         <div class="body-regular-2 mb-2">Email</div>
 
         <v-text-field
           v-model="email"
-          label="Masukan email anda"
+          placeholder="Masukan email anda"
           required
           solo
         ></v-text-field>
@@ -19,7 +19,7 @@
 
         <v-text-field
           v-model="password"
-          label="Masukan kata sandi anda"
+          placeholder="Masukan kata sandi anda"
           required
           solo
           :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -38,9 +38,6 @@
           >
             Login
           </v-btn>
-          <!-- <v-btn @click="login" color="#528bcc" dark large class="px-10">
-            Login
-          </v-btn> -->
         </div>
       </form>
     </v-col>
@@ -56,12 +53,11 @@ export default {
       showPassword: false,
       email: '',
       password: '',
-      token: '',
     }
   },
   methods: {
-    submit() {
-      this.$store.dispatch('authentication/fetchLogin', {
+    handleSubmit() {
+      this.$store.dispatch('auth/fetchLogin', {
         email: this.email,
         password: this.password,
       })
