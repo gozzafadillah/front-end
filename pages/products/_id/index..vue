@@ -1,5 +1,5 @@
 <template>
-  <div>Product Detail Page</div>
+  <div>Product Detail Page {{ $route.params.id }}</div>
 </template>
 <script>
 export default {
