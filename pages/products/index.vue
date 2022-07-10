@@ -2,13 +2,13 @@
   <v-container>
     <v-row dense wrap>
       <v-col cols="12" xs="6" sm="6" md="3">
-        <DashboardCard icon="mdi-account" title="Admins" :count="2" />
+        <DashboardCard icon="mdi-account" title="Admins" :count="1" />
       </v-col>
       <v-col cols="12" xs="6" sm="6" md="3">
         <DashboardCard
           icon="mdi-account-multiple"
           title="Costumers"
-          :count="10"
+          :count="countCustomers"
         />
       </v-col>
       <v-col cols="12" xs="6" sm="6" md="3">
@@ -24,7 +24,7 @@
           :color-icon="'#fff'"
           title="Products"
           icon="mdi-cube"
-          :count="3"
+          :count="countProducts"
         />
       </v-col>
     </v-row>
@@ -38,8 +38,8 @@
 
     <v-row dense wrap>
       <v-col
-        v-for="category in categories"
-        :key="category.name"
+        v-for="(category, index) in categories"
+        :key="(category.Name, index)"
         cols="6"
         xs="4"
         sm="4"
@@ -49,23 +49,23 @@
       >
         <CategoryCard
           :category-icon="category.icon"
-          :category-name="category.name"
-          @click="showProductCard"
+          :category-name="category.Name"
+          @click="showProductCard(index, category.ID)"
         />
       </v-col>
       <v-col cols="6" xs="4" sm="4" md="2" lg="2" xl="2">
-        <ButtonCard height="145" @click="newCategory" />
+        <ButtonCard height="145" @click="createCategory" />
       </v-col>
     </v-row>
 
     <v-row v-if="showProduct" wrap>
       <v-col cols="12">
         <v-card>
-          <v-card-title>Category Name</v-card-title>
+          <v-card-title>{{ categoryName }}</v-card-title>
           <v-row dense wrap>
             <v-col
-              v-for="product in products"
-              :key="product.name"
+              v-for="(product, index) in productsByCategory"
+              :key="(product.Name, index)"
               cols="6"
               xs="4"
               sm="4"
@@ -74,7 +74,7 @@
               xl="1"
             >
               <ProductCard
-                :product-name="product.name"
+                :product-name="product.Name"
                 @click="productDetail"
               />
             </v-col>
@@ -96,35 +96,46 @@
 </template>
 <script>
 import CategoryCard from '@/components/CategoryCard.vue'
-import ProductCard from '@/components/ProductCard.vue'
+// import ProductCard from '@/components/ProductCard.vue'
 import ButtonCard from '@/components/ButtonCard.vue'
 
 export default {
   name: 'ProductPage',
   components: {
     CategoryCard,
-    ProductCard,
+    // ProductCard,
     ButtonCard,
   },
-  // middleware: ['auth'],
+  middleware: ['auth'],
   data() {
     return {
       showProduct: false,
     }
   },
   computed: {
-    products() {
-      return this.$store.state.products.listProduct
+    countCustomers() {
+      return this.$store.getters['customers/list'].length
+    },
+    countProducts() {
+      return this.$store.getters['products/list'].length
     },
     categories() {
-      return this.$store.state.categories.listCategory
+      return this.$store.getters['categories/list']
+    },
+    categoryName() {
+      return this.$store.getters['categories/list'][0].Name
+    },
+    productsByCategory() {
+      return this.$store.getters['products/listByCategory']
     },
   },
   mounted() {
-    this.fetchProductList()
+    this.fetchListCustomer()
+    this.fetchListCategory()
+    this.fetchListProduct()
   },
   methods: {
-    newCategory() {
+    createCategory() {
       this.$router.push('/categories/create')
     },
     showProductCard() {
@@ -136,10 +147,17 @@ export default {
     productDetail() {
       this.$router.push('/products/detail')
     },
-
-    // API
-    fetchProductList() {
-      this.$store.dispatch('products/fetchProduct')
+    fetchListCustomer() {
+      this.$store.dispatch('customers/fetchList')
+    },
+    fetchListCategory() {
+      this.$store.dispatch('categories/fetchList')
+    },
+    fetchListProduct() {
+      this.$store.dispatch('products/fetchList')
+    },
+    fetchListProducyByCategory(categoryId) {
+      this.$store.dispatch('products/fetchListByCategory', categoryId)
     },
   },
 }

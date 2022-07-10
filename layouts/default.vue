@@ -25,7 +25,9 @@
                 <v-list-item-content>
                   <v-list-item-title>
                     <v-avatar size="36" width="64">
-                      <v-icon>{{ item.icon }}</v-icon>
+                      <v-icon>
+                        {{ item.icon }}
+                      </v-icon>
                     </v-avatar>
                     {{ item.title }}
                   </v-list-item-title>
@@ -69,6 +71,11 @@
                     <v-item-title>{{ account.title }}</v-item-title>
                   </v-list-item-content>
                 </v-list-item>
+                <v-list-item @click="handleLogout">
+                  <v-list-item-content class="d-block text-center">
+                    <v-item-title>Logout</v-item-title>
+                  </v-list-item-content>
+                </v-list-item>
               </v-layout>
             </v-list>
           </v-menu>
@@ -76,7 +83,7 @@
       </v-layout>
     </v-navigation-drawer>
 
-    <v-app-bar flat app fixed color="#">
+    <v-app-bar flat app fixed color="#F0F4F7">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-app-bar-title v-if="drawer == false" transition="scale-transition">
         <Nuxt-Link to="/" class="font-weight-black text-decoration-none">
@@ -97,23 +104,27 @@ export default {
   data() {
     return {
       clipped: false,
-      drawer: false,
+      drawer: true,
       fixed: false,
-      user: {
-        name: 'Nanda HM',
-        avatar: 'icon.png',
-      },
+      user: [
+        {
+          name: 'Nanda HM',
+          avatar: 'icon.png',
+        },
+      ],
       items: [
         { link: '', icon: 'mdi-view-dashboard', title: 'Overview' },
-        { link: 'products', icon: 'mdi-town-hall', title: 'Products' },
-        { link: 'transaction', icon: 'mdi-town-hall', title: 'Transaction' },
-        { link: 'account', icon: 'mdi-account-box-outline', title: 'Account' },
+        { link: 'products', icon: 'mdi-cube', title: 'Products' },
       ],
       accounts: [
         { link: 'setting', icon: 'mdi-cog-outline', title: 'Setting' },
-        { link: 'logout', icon: 'mdi-logout-variant', title: 'Logout' },
       ],
     }
+  },
+  methods: {
+    handleLogout() {
+      this.$store.dispatch('auth/fetchLogout')
+    },
   },
 }
 </script>

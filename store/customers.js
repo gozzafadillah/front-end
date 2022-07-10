@@ -1,13 +1,11 @@
 // State
 export const state = () => ({
   list: [],
-  listByCategory: [],
 })
 
 // Getters
 export const getters = {
   list: (state) => state.list,
-  listByCategory: (state) => state.listByCategory,
 }
 
 // Mutations
@@ -18,13 +16,16 @@ export const mutations = {
   setListByCategory(state, param) {
     state.listByCategory = param
   },
+  setCount(state, param) {
+    state.count = param
+  },
 }
 
 // Actions
 export const actions = {
   fetchList(store) {
     this.$axios
-      .get('/api/products')
+      .get('/api/admin/users')
       .then((response) => {
         console.log(response.data.message)
         store.commit('setList', response.data.result)
@@ -41,6 +42,17 @@ export const actions = {
         console.log(response.data.message)
         console.log(response.data.result.products)
         store.commit('setListByCategory', response.data.result.products)
+      })
+      .catch((error) => {
+        console.log('error: ', error)
+      })
+  },
+  fetchCount(store) {
+    this.$axios
+      .get('/api/products/count')
+      .then((response) => {
+        console.log(response.data.message)
+        store.commit('setCount', response.data.result)
       })
       .catch((error) => {
         console.log('error: ', error)
