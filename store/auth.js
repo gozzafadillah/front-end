@@ -1,52 +1,74 @@
+// State
 export const state = () => ({
+  authenticated: false,
   token: null,
+  user: [],
 })
 
-// export const getters = {
-//   isAuthenticated(state) {
-//     return !!state.token
-//   },
-// }
+// Getters
+export const getters = {
+  isAuthenticated(state) {
+    return !!state.authenticated
+  },
+  isToken(state) {
+    return state.token
+  },
+  isUser(state) {
+    return state.user
+  },
+}
 
+// Mutations
 export const mutations = {
   setToken(state, param) {
     state.token = param
   },
+  setAuthenticated(state, param) {
+    state.authenticated = param
+  },
+  setUser(state, param) {
+    state.user = param
+  },
 }
 
+// Actions
 export const actions = {
-  setToken(store, param) {
-    store.commit('setToken', param)
-  },
-
   async fetchLogin(store, param) {
+    // console.log(param)
     try {
+      // hit api to get token
       const res = await this.$api.$post('login', {
         email: param.email,
         password: param.password,
       })
 
-      localStorage.setItem('token', res.result.jwt)
-      this.$router.push('/')
-    } catch (error) {}
-    // this.$axios
-    //   .post('http://127.0.0.1:8000/api/login', {
-    //     email: param.email,
-    //     password: param.password,
-    //   })
-    //   .then((res) => {
-    //     this.$cookies.set('token', res.data.result.jwt, {
-    //       path: '/',
-    //       maxAge: 60 * 60 * 24 * 7,
-    //     })
+      console.log(res.rescode)
 
-    //     store.commit('setToken', res.data.result.jwt)
-    //     this.$router.push('/')
-    //   })
-    //   .catch((err) => console.log(err))
+      if (res.rescode >= 200 || res.rescode < 400) {
+        store.commit('setAuthenticated', true)
+        store.commit('setToken', res.data.token)
+      }
+      localStorage.setItem('token', res.data.token)
+      this.$router.push('/')
+    } catch (error) {
+      console.log(error)
+    }
+  },
+
+  async fetchUsers(store) {
+    try {
+      const res = await this.$api.$get('admin/users')
+      console.log(res.rescode)
+      store.commit('setUser', res.result)
+    } catch (error) {
+      console.log(error)
+    }
   },
 
   fetchLogout(store) {
-    localStorage.removeItem('token')
+    store.commit('setAuthenticated', false)
+    store.commit('setToken', null)
+    console.log('Logout Success!')
+    this.$router.push('/login')
   },
 }

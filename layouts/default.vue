@@ -71,6 +71,11 @@
                     <v-item-title>{{ account.title }}</v-item-title>
                   </v-list-item-content>
                 </v-list-item>
+                <v-list-item @click="handleLogout">
+                  <v-list-item-content class="d-block text-center">
+                    <v-item-title>Logout</v-item-title>
+                  </v-list-item-content>
+                </v-list-item>
               </v-layout>
             </v-list>
           </v-menu>
@@ -78,7 +83,7 @@
       </v-layout>
     </v-navigation-drawer>
 
-    <v-app-bar flat app fixed color="#">
+    <v-app-bar flat app fixed color="#F0F4F7">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-app-bar-title v-if="drawer == false" transition="scale-transition">
         <Nuxt-Link to="/" class="font-weight-black text-decoration-none">
@@ -98,20 +103,28 @@ export default {
   name: 'DefaultLayout',
   data() {
     return {
-      drawer: false,
-      user: {
-        name: 'Nanda HM',
-        avatar: 'icon.png',
-      },
+      clipped: false,
+      drawer: true,
+      fixed: false,
+      user: [
+        {
+          name: 'Nanda HM',
+          avatar: 'icon.png',
+        },
+      ],
       items: [
         { link: '', icon: 'mdi-view-dashboard', title: 'Overview' },
         { link: 'products', icon: 'mdi-cube', title: 'Products' },
       ],
       accounts: [
         { link: 'setting', icon: 'mdi-cog-outline', title: 'Setting' },
-        { link: 'logout', icon: 'mdi-logout-variant', title: 'Logout' },
       ],
     }
+  },
+  methods: {
+    handleLogout() {
+      this.$store.dispatch('auth/fetchLogout')
+    },
   },
 }
 </script>

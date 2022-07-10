@@ -21,7 +21,11 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/vuex-persistedstate', '~/plugins/api'],
+  plugins: [
+    '~/plugins/vuex-persist',
+    '~/plugins/persistedState.client.js',
+    '~/plugins/api',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -41,7 +45,6 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     '@nuxtjs/proxy',
-    '@nuxtjs/composition-api/module',
     'cookie-universal-nuxt',
     '@nuxtjs/toast',
   ],
@@ -49,21 +52,15 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    // baseURL: 'http://13.229.124.128:19000/',
-    // baseURL: 'http://127.0.0.1:8000/',
-    // baseURL: 'http://127.0.0.1:8000/api/',
-    baseURL:
-      'https://43a5-2001-448a-3020-6ad2-a0d3-1272-4793-139f.ap.ngrok.io/',
+    baseURL: '/',
     proxy: true,
   },
 
   proxy: {
-    '/api': 'https://43a5-2001-448a-3020-6ad2-a0d3-1272-4793-139f.ap.ngrok.io/',
-    // '/api': 'http://127.0.0.1:8000/api/',
-  },
-
-  devServer: {
-    proxy: 'https://43a5-2001-448a-3020-6ad2-a0d3-1272-4793-139f.ap.ngrok.io/',
+    '/api/': {
+      target: 'https://bayeue.thisham.my.id/api/',
+      pathRewrite: { '^/api/': '' },
+    },
   },
 
   toast: {

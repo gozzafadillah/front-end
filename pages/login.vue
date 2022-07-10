@@ -55,9 +55,6 @@ export default {
       password: '',
     }
   },
-  mounted() {
-    this.$toast.show('Logging in...')
-  },
   methods: {
     handleSubmit() {
       this.$store.dispatch('auth/fetchLogin', {
