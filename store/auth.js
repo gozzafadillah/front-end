@@ -37,7 +37,7 @@ export const actions = {
     // console.log(param)
     try {
       // hit api to get token
-      const res = await this.$api.$post('login', {
+      const res = await this.$axios.$post('/api/login', {
         email: param.email,
         password: param.password,
       })
