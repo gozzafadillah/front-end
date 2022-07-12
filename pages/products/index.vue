@@ -7,7 +7,7 @@
       <v-col cols="12" xs="6" sm="6" md="3">
         <DashboardCard
           icon="mdi-account-multiple"
-          title="Costumers"
+          title="Customers"
           :count="countCustomers"
         />
       </v-col>
@@ -50,7 +50,7 @@
         <CategoryCard
           :category-icon="category.icon"
           :category-name="category.Name"
-          @click="showProductCard(index, category.ID)"
+          @click="showProductCard(category.ID)"
         />
       </v-col>
       <v-col cols="6" xs="4" sm="4" md="2" lg="2" xl="2">
@@ -61,7 +61,9 @@
     <v-row v-if="showProduct" wrap>
       <v-col cols="12">
         <v-card>
-          <v-card-title>{{ categoryName }}</v-card-title>
+          <v-card-title>
+            {{ categoryById.Name }}
+          </v-card-title>
           <v-row dense wrap>
             <v-col
               v-for="(product, index) in productsByCategory"
@@ -84,7 +86,12 @@
           </v-row>
 
           <div class="text-right pr-4 pb-4">
-            <v-btn color="red" large dark @click="showProductCard">
+            <v-btn
+              color="red"
+              large
+              dark
+              @click.stop="showProduct = !showProduct"
+            >
               <v-icon class="mr-2"> mdi-close </v-icon>
               Close
             </v-btn>
@@ -96,14 +103,14 @@
 </template>
 <script>
 import CategoryCard from '@/components/CategoryCard.vue'
-// import ProductCard from '@/components/ProductCard.vue'
+import ProductCard from '@/components/ProductCard.vue'
 import ButtonCard from '@/components/ButtonCard.vue'
 
 export default {
   name: 'ProductPage',
   components: {
     CategoryCard,
-    // ProductCard,
+    ProductCard,
     ButtonCard,
   },
   middleware: ['auth'],
@@ -122,30 +129,47 @@ export default {
     categories() {
       return this.$store.getters['categories/list']
     },
+    categoryById() {
+      return this.$store.getters['categories/listById']
+    },
     categoryName() {
-      return this.$store.getters['categories/list'][0].Name
+      return this.$store.getters['categories/categoryName']
     },
     productsByCategory() {
-      return this.$store.getters['products/listByCategory']
+      return this.$store.state['products/listByCategory']
     },
   },
   mounted() {
     this.fetchListCustomer()
     this.fetchListCategory()
     this.fetchListProduct()
+    // this.fetchListProductByCategory()
   },
   methods: {
+    // redirect to create category
     createCategory() {
       this.$router.push('/categories/create')
     },
-    showProductCard() {
-      this.showProduct = !this.showProduct
-    },
+
+    // redirect to create product
     newProduct() {
       this.$router.push('/products/create')
     },
+
+    // redirect to detail product
     productDetail() {
       this.$router.push('/products/detail')
+    },
+
+    // redirect to action in store
+    // show products by category
+    showProductCard(id) {
+      // show product card
+      this.showProduct = !this.showProduct
+      // fetch category by id
+      this.$store.dispatch('categories/fetchListById', id)
+      // fetch list product by category
+      this.$store.dispatch('products/fetchListByCategory', id)
     },
     fetchListCustomer() {
       this.$store.dispatch('customers/fetchList')
@@ -156,9 +180,10 @@ export default {
     fetchListProduct() {
       this.$store.dispatch('products/fetchList')
     },
-    fetchListProducyByCategory(categoryId) {
-      this.$store.dispatch('products/fetchListByCategory', categoryId)
-    },
+    // fetchListProductByCategory(categoryId) {
+    //   this.showProduct = !this.showProduct
+    //   this.$store.dispatch('products/fetchListByCategory', categoryId)
+    // },
   },
 }
 </script>
