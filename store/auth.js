@@ -3,6 +3,7 @@ export const state = () => ({
   authenticated: false,
   token: null,
   user: [],
+  landing: false,
 })
 
 // Getters
@@ -15,6 +16,9 @@ export const getters = {
   },
   isUser(state) {
     return state.user
+  },
+  isLanding(state) {
+    return state.landing
   },
 }
 
@@ -29,6 +33,9 @@ export const mutations = {
   setUser(state, param) {
     state.user = param
   },
+  setLanding(state, param) {
+    state.landing = param
+  },
 }
 
 // Actions
@@ -37,38 +44,72 @@ export const actions = {
     // console.log(param)
     try {
       // hit api to get token
-      const res = await this.$axios.$post('/api/login', {
+      const response = await this.$axios.$post('/api/login', {
         email: param.email,
         password: param.password,
       })
+      console.log(response.rescode)
 
-      console.log(res.rescode)
-
-      if (res.rescode >= 200 || res.rescode < 400) {
+      if (response.rescode >= 200 || response.rescode < 400) {
         store.commit('setAuthenticated', true)
-        store.commit('setToken', res.data.token)
+        store.commit('setToken', response.data.token)
       }
-      localStorage.setItem('token', res.data.token)
+      localStorage.setItem('token', response.data.token)
+
+      // setup notification
+      const message = response.message
+      const notification = message.split(' ')
+
+      for (let i = 0; i < notification.length; i++) {
+        notification[i] =
+          notification[i].charAt(0).toUpperCase() + notification[i].slice(1)
+      }
+      const notificationMessage = notification.join(' ')
+
+      // show notification
+      this.$toast.success(`${notificationMessage}!`, {
+        position: 'top-right',
+        duration: 3000,
+        fitToScreen: true,
+      })
+
+      // redirect to dashboard
       this.$router.push('/')
     } catch (error) {
-      console.log(error)
+      console.log('Error: ', error)
     }
   },
 
   async fetchUsers(store) {
     try {
-      const res = await this.$api.$get('admin/users')
-      console.log(res.rescode)
-      store.commit('setUser', res.result)
+      const response = await this.$axios.$get('admin/users')
+      console.log(response.rescode)
+
+      store.commit('setUser', response.result)
     } catch (error) {
-      console.log(error)
+      console.log('Error: ', error)
     }
   },
 
   fetchLogout(store) {
     store.commit('setAuthenticated', false)
     store.commit('setToken', null)
-    console.log('Logout Success!')
+
+    const notificationMessage = 'Logout Successfully, Good Bye!'
+
+    // show notification
+    this.$toast.success(`${notificationMessage}!`, {
+      position: 'top-right',
+      duration: 3000,
+      fitToScreen: true,
+    })
+
+    // redirect to login
     this.$router.push('/login')
+  },
+
+  checkLanding(store) {
+    // masih fasle?this
+    // user klik btn login / created login supaya render ke login dengan state true
   },
 }
