@@ -1,12 +1,12 @@
 <template>
   <v-card
-    :class="[dark ? 'dark' : 'light', 'flat', 'card']"
+    :class="[dark ? 'dark' : 'light', 'd-flex', 'align-center', 'flat', 'card']"
     v-bind="$attrs"
     v-on="$listeners"
   >
-    <v-row wrap>
+    <v-row wrap dense>
       <v-col align="center" align-self="center">
-        <v-icon class="ma-3" x-large :color="colorIcon">
+        <v-icon x-large :color="colorIcon">
           {{ iconButton }}
         </v-icon>
       </v-col>
@@ -32,18 +32,3 @@ export default {
   },
 }
 </script>
-<style lang="scss" scoped>
-.dark {
-  background-color: $bayeue-primary;
-  color: #fff;
-}
-.light {
-  background-color: #fff;
-  color: $bayeue-dark;
-}
-.card {
-  padding: 20px 10px;
-  border-radius: 10px;
-  box-shadow: 3px 3px 20px rgba(6, 57, 67, 0.15) !important;
-}
-</style>

@@ -4,7 +4,7 @@
     v-bind="$attrs"
     v-on="$listeners"
   >
-    <v-row wrap>
+    <v-row dense wrap>
       <v-col cols="3" align="center" align-self="center">
         <v-icon :color="colorIcon" x-large>
           {{ icon }}
@@ -47,19 +47,3 @@ export default {
   },
 }
 </script>
-<style lang="scss" scoped>
-.dark {
-  background-color: $bayeue-primary !important;
-  color: #fff;
-}
-.light {
-  background-color: #fff;
-  color: $bayeue-dark;
-}
-.card {
-  padding: 20px 10px;
-  background: #fdfdfd;
-  border-radius: 10px;
-  box-shadow: 3px 3px 20px rgba(6, 57, 67, 0.15) !important;
-}
-</style>
