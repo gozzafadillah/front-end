@@ -30,9 +30,13 @@
     </v-row>
 
     <v-row dense wrap>
-      <v-col class="my-4">
-        <h1 class="headline font-weight-bold">Manage Product</h1>
-        <h2 class="title">Category</h2>
+      <v-col>
+        <v-card-title class="headline font-weight-bold"
+          >Manage Product</v-card-title
+        >
+        <v-card-subtitle class="title font-font-weight-bold"
+          >Categories</v-card-subtitle
+        >
       </v-col>
     </v-row>
 
@@ -40,9 +44,10 @@
       <v-col
         v-for="(category, index) in categories"
         :key="(category.Name, index)"
+        class="d-flex child-flex"
         cols="6"
-        xs="4"
-        sm="4"
+        xs="3"
+        sm="3"
         md="2"
         lg="2"
         xl="2"
@@ -53,49 +58,69 @@
           @click="showProductCard(category.ID)"
         />
       </v-col>
-      <v-col cols="6" xs="4" sm="4" md="2" lg="2" xl="2">
-        <ButtonCard height="145" @click="createCategory" />
+      <v-col
+        class="d-flex child-flex"
+        cols="6"
+        xs="3"
+        sm="3"
+        md="2"
+        lg="2"
+        xl="2"
+      >
+        <ButtonCard dark height="145" width="145" @click="createCategory" />
       </v-col>
     </v-row>
 
-    <v-row v-if="showProduct" wrap>
-      <v-col cols="12">
-        <v-card>
-          <v-card-title>
+    <v-row dense wrap>
+      <v-col class="d-flex child-flex">
+        <v-card
+          :class="[dark ? 'dark' : 'light', 'align-center', 'flat', 'card']"
+        >
+          <v-card-title class="title">
             {{ categoryById.Name }}
           </v-card-title>
+
           <v-row dense wrap>
             <v-col
               v-for="(product, index) in productsByCategory"
-              :key="(product.Name, index)"
-              cols="6"
+              :key="(product.slug, index)"
+              cols="4"
               xs="4"
-              sm="4"
-              md="1"
+              sm="3"
+              md="2"
               lg="1"
               xl="1"
             >
               <ProductCard
-                :product-name="product.Name"
+                v-if="productsByCategory.length > 0"
+                :product-src="product.Image"
                 @click="productDetail"
               />
+              {{ productsByCategory.length }}
             </v-col>
-            <v-col cols="6" xs="4" sm="4" md="1" lg="1" xl="1">
-              <ButtonCard height="100" @click="newProduct" />
+            <v-col
+              cols="4"
+              xs="4"
+              sm="3"
+              md="2"
+              lg="1"
+              xl="1"
+              class="d-flex child-flex"
+            >
+              <ButtonCard dark @click="newProduct" />
             </v-col>
           </v-row>
 
-          <div class="text-right pr-4 pb-4">
-            <v-btn
-              color="red"
-              large
-              dark
-              @click.stop="showProduct = !showProduct"
-            >
-              <v-icon class="mr-2"> mdi-close </v-icon>
-              Close
-            </v-btn>
-          </div>
+          <v-row dense wrap class="text-right">
+            <v-col>
+              <v-btn color="blue" dark @click="detailCategory">
+                <v-icon> mdi-eye-circle-outline </v-icon>
+              </v-btn>
+              <v-btn color="red" dark @click.stop="showProduct = !showProduct">
+                <v-icon> mdi-close </v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
         </v-card>
       </v-col>
     </v-row>
@@ -116,7 +141,7 @@ export default {
   middleware: ['auth'],
   data() {
     return {
-      showProduct: false,
+      showProduct: true,
     }
   },
   computed: {
@@ -132,11 +157,8 @@ export default {
     categoryById() {
       return this.$store.getters['categories/listById']
     },
-    categoryName() {
-      return this.$store.getters['categories/categoryName']
-    },
     productsByCategory() {
-      return this.$store.state['products/listByCategory']
+      return this.$store.getters['products/listByCategory']
     },
   },
   mounted() {
@@ -156,6 +178,11 @@ export default {
       this.$router.push('/products/create')
     },
 
+    // redirect to detail category
+    detailCategory() {
+      this.$router.push('/categories/' + this.categoryById.ID)
+    },
+
     // redirect to detail product
     productDetail() {
       this.$router.push('/products/detail')
@@ -165,7 +192,7 @@ export default {
     // show products by category
     showProductCard(id) {
       // show product card
-      this.showProduct = !this.showProduct
+      // this.showProduct = !this.showProduct
       // fetch category by id
       this.$store.dispatch('categories/fetchListById', id)
       // fetch list product by category
@@ -187,3 +214,18 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+.dark {
+  background-color: $bayeue-primary !important;
+  color: #fff;
+}
+.light {
+  background-color: #fff;
+  color: $bayeue-dark;
+}
+.card {
+  padding: 20px 10px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 20px rgba(6, 57, 67, 0.15) !important;
+}
+</style>

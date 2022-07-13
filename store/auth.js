@@ -3,6 +3,7 @@ export const state = () => ({
   authenticated: false,
   token: null,
   user: [],
+  landing: false,
 })
 
 // Getters
@@ -16,6 +17,9 @@ export const getters = {
   isUser(state) {
     return state.user
   },
+  isLanding(state) {
+    return state.landing
+  },
 }
 
 // Mutations
@@ -28,6 +32,9 @@ export const mutations = {
   },
   setUser(state, param) {
     state.user = param
+  },
+  setLanding(state, param) {
+    state.landing = param
   },
 }
 
@@ -77,6 +84,7 @@ export const actions = {
     try {
       const response = await this.$axios.$get('admin/users')
       console.log(response.rescode)
+
       store.commit('setUser', response.result)
     } catch (error) {
       console.log('Error: ', error)
@@ -98,5 +106,10 @@ export const actions = {
 
     // redirect to login
     this.$router.push('/login')
+  },
+
+  checkLanding(store) {
+    // masih fasle?this
+    // user klik btn login / created login supaya render ke login dengan state true
   },
 }

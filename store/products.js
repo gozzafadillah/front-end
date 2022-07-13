@@ -40,7 +40,6 @@ export const actions = {
       .get(`/api/products/category/${_categoryId}`)
       .then((response) => {
         console.log(`Message : ${response.data.message}`)
-        console.log(response.data.result.products)
 
         store.commit('setListByCategory', response.data.result.products)
       })

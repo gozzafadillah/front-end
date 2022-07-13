@@ -41,7 +41,7 @@ export const actions = {
       .get(`/api/category/${_id}`)
       .then((response) => {
         console.log(`Message : ${response.data.message}`)
-        console.log(response.data.result)
+        // console.log(response.data.result)
         store.commit('setListById', response.data.result)
       })
       .catch((error) => {

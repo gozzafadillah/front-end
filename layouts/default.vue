@@ -130,7 +130,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .main {
-  height: 100vh;
+  min-height: 100vh;
   background-color: $bayeue-light;
 }
 .brand {
