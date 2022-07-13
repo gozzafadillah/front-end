@@ -1,7 +1,7 @@
 // State
 export const state = () => ({
   list: [],
-  listByCategory: [],
+  listByCategory: {},
 })
 
 // Getters
@@ -26,20 +26,21 @@ export const actions = {
     this.$axios
       .get('/api/products')
       .then((response) => {
-        console.log(response.data.message)
+        console.log(`Message : ${response.data.message}`)
+
         store.commit('setList', response.data.result)
       })
       .catch((error) => {
-        console.log('error: ', error)
+        console.log('Error: ', error)
       })
   },
-  fetchListByCategory(store, categoryId) {
-    console.log(categoryId)
+  fetchListByCategory(store, _categoryId) {
+    // console.log(_categoryId)
     this.$axios
-      .get('/api/products/category/' + categoryId)
+      .get(`/api/products/category/${_categoryId}`)
       .then((response) => {
-        console.log(response.data.message)
-        console.log(response.data.result.products)
+        console.log(`Message : ${response.data.message}`)
+
         store.commit('setListByCategory', response.data.result.products)
       })
       .catch((error) => {
