@@ -3,7 +3,6 @@ export const state = () => ({
   authenticated: false,
   token: null,
   user: [],
-  landing: false,
 })
 
 // Getters
@@ -16,9 +15,6 @@ export const getters = {
   },
   isUser(state) {
     return state.user
-  },
-  isLanding(state) {
-    return state.landing
   },
 }
 
@@ -33,9 +29,6 @@ export const mutations = {
   setUser(state, param) {
     state.user = param
   },
-  setLanding(state, param) {
-    state.landing = param
-  },
 }
 
 // Actions
@@ -48,6 +41,7 @@ export const actions = {
         email: param.email,
         password: param.password,
       })
+
       console.log(response.rescode)
 
       if (response.rescode >= 200 || response.rescode < 400) {
@@ -108,8 +102,9 @@ export const actions = {
     this.$router.push('/login')
   },
 
-  checkLanding(store) {
-    // masih fasle?this
-    // user klik btn login / created login supaya render ke login dengan state true
+  checkAuthenticated(store) {
+    if (!this.$route.path === '/landing' && !this.$route.path === '/login') {
+      store.commit('setAuthenticated', true)
+    }
   },
 }
