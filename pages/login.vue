@@ -69,6 +69,9 @@ export default {
       password: '',
     }
   },
+  mounted() {
+    this.$store.getters['auth/isAuthenticated'] && this.$router.push('/')
+  },
   methods: {
     handleSubmit() {
       this.$store.dispatch('auth/fetchLogin', {
