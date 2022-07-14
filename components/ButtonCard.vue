@@ -21,13 +21,13 @@ export default {
       type: String,
       default: 'mdi-plus-box',
     },
-    dark: {
-      type: Boolean,
-      default: true,
-    },
     colorIcon: {
       type: String,
       default: '#fff',
+    },
+    dark: {
+      type: Boolean,
+      default: false,
     },
   },
 }

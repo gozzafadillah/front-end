@@ -22,6 +22,7 @@
         <DashboardCard
           dark
           :color-icon="'#fff'"
+          :color-title="'#fff'"
           title="Products"
           icon="mdi-cube"
           :count="countProducts"
@@ -73,9 +74,7 @@
 
     <v-row dense wrap>
       <v-col class="d-flex child-flex">
-        <v-card
-          :class="[dark ? 'dark' : 'light', 'align-center', 'flat', 'card']"
-        >
+        <v-card :class="['light', 'align-center', 'flat', 'card']">
           <v-card-title class="title">
             {{ categoryById.Name }}
           </v-card-title>
@@ -92,11 +91,10 @@
               xl="1"
             >
               <ProductCard
-                v-if="productsByCategory.length > 0"
                 :product-src="product.Image"
                 @click="productDetail"
               />
-              {{ productsByCategory.length }}
+              <!-- {{ productsByCategory.length }} -->
             </v-col>
             <v-col
               cols="4"
@@ -114,10 +112,10 @@
           <v-row dense wrap class="text-right">
             <v-col>
               <v-btn color="blue" dark @click="detailCategory">
-                <v-icon> mdi-eye-circle-outline </v-icon>
+                <v-icon>mdi-eye-circle-outline</v-icon>
               </v-btn>
               <v-btn color="red" dark @click.stop="showProduct = !showProduct">
-                <v-icon> mdi-close </v-icon>
+                <v-icon>mdi-close</v-icon>
               </v-btn>
             </v-col>
           </v-row>
@@ -214,7 +212,7 @@ export default {
   },
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss" scope>
 .dark {
   background-color: $bayeue-primary !important;
   color: #fff;

@@ -37,13 +37,10 @@ export default {
       type: String,
       default: '#0092E4',
     },
+    dark: {
+      type: Boolean,
+      default: false,
+    },
   },
 }
 </script>
-<style lang="scss" scoped>
-.card {
-  background: #fdfdfd;
-  border-radius: 10px;
-  box-shadow: 3px 3px 20px rgba(6, 57, 67, 0.15) !important;
-}
-</style>
