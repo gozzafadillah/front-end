@@ -92,7 +92,7 @@
             >
               <ProductCard
                 :product-src="product.Image"
-                @click="productDetail"
+                @click="productDetail(product.Product_Slug)"
               />
               <!-- {{ productsByCategory.length }} -->
             </v-col>
@@ -136,7 +136,6 @@ export default {
     ProductCard,
     ButtonCard,
   },
-  middleware: ['auth'],
   data() {
     return {
       showProduct: true,
@@ -182,8 +181,8 @@ export default {
     },
 
     // redirect to detail product
-    productDetail() {
-      this.$router.push('/products/detail')
+    productDetail(_slug) {
+      this.$router.push(`/products/${_slug}`)
     },
 
     // redirect to action in store

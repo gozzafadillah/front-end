@@ -152,7 +152,6 @@ const gradients = [
 
 export default {
   name: 'DashboardPage',
-  middleware: ['auth'],
   data() {
     return {
       width: 2,

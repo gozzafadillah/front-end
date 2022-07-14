@@ -2,12 +2,14 @@
 export const state = () => ({
   list: [],
   listByCategory: {},
+  detail: {},
 })
 
 // Getters
 export const getters = {
   list: (state) => state.list,
   listByCategory: (state) => state.listByCategory,
+  detail: (state) => state.detail,
 }
 
 // Mutations
@@ -17,6 +19,9 @@ export const mutations = {
   },
   setListByCategory(state, param) {
     state.listByCategory = param
+  },
+  setDetail(state, param) {
+    state.detail = param
   },
 }
 
@@ -46,5 +51,20 @@ export const actions = {
       .catch((error) => {
         console.log('error: ', error)
       })
+  },
+  async fetchDetailBySlug(store, _slug) {
+    // console.log(_slug)
+    try {
+      // hit api to get detail product
+      const response = await this.$axios.get(`/api/detail/${_slug}`)
+
+      console.log(response.data.rescode)
+
+      if (response.rescode >= 200 || response.rescode < 400) {
+        store.commit('setDetail', response.data)
+      }
+    } catch (error) {
+      console.log('Error: ', error)
+    }
   },
 }
