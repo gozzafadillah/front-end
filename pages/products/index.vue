@@ -1,107 +1,229 @@
 <template>
-  <div>
-    <v-container>
-      <v-row wrap no-gutters>
-        <v-col>
-          <h1 class="headline font-weight-bold">Manage Product</h1>
-          <h2 class="title mb-2">Category</h2>
-        </v-col>
-      </v-row>
-      <v-row wrap>
-        <v-col cols="6" xs="4" sm="4" md="2" lg="1" xl="1">
-          <CategoryCard class="active__card" />
-        </v-col>
-        <v-col cols="6" xs="4" sm="4" md="2" lg="1" xl="1">
-          <CategoryCard />
-        </v-col>
-        <v-col cols="6" xs="4" sm="4" md="2" lg="1" xl="1">
-          <CategoryCard />
-        </v-col>
-        <v-col cols="6" xs="4" sm="4" md="2" lg="1" xl="1">
-          <CategoryCard />
-        </v-col>
-      </v-row>
-    </v-container>
+  <v-container>
+    <v-row dense wrap>
+      <v-col cols="12" xs="6" sm="6" md="3">
+        <DashboardCard icon="mdi-account" title="Admins" :count="1" />
+      </v-col>
+      <v-col cols="12" xs="6" sm="6" md="3">
+        <DashboardCard
+          icon="mdi-account-multiple"
+          title="Customers"
+          :count="countCustomers"
+        />
+      </v-col>
+      <v-col cols="12" xs="6" sm="6" md="3">
+        <DashboardCard
+          title="Transactions"
+          icon="mdi-swap-horizontal"
+          :count="10"
+        />
+      </v-col>
+      <v-col cols="12" xs="6" sm="6" md="3">
+        <DashboardCard
+          dark
+          :color-icon="'#fff'"
+          :color-title="'#fff'"
+          title="Products"
+          icon="mdi-cube"
+          :count="countProducts"
+        />
+      </v-col>
+    </v-row>
 
-    <v-container v-if="showAddCategory == true">
-      <v-row wrap no-gutters>
-        <v-col cols="12" xs="4" sm="4" md="8">
-          <v-card>
-            <v-card-title> Payment </v-card-title>
-            <v-row>
-              <v-col cols="2">
-                <v-card class="mx-auto my-4 text-center" max-width="114">
-                  <img src="@/assets/img/listrik.png" class="pt-4" />
-                  <div class="body-1 font-weight-bold pb-4">Listrik</div>
-                </v-card>
-              </v-col>
-              <v-col cols="2">
-                <v-card class="mx-auto my-4 text-center" max-width="114">
-                  <img src="@/assets/img/paketdata.png" class="pt-4" />
-                  <div class="body-1 font-weight-bold pb-4">Paket Data</div>
-                </v-card>
-              </v-col>
-              <v-col cols="2">
-                <v-card class="mx-auto my-4 text-center" max-width="114">
-                  <img src="@/assets/img/pulsa.png" class="pt-4" />
-                  <div class="body-1 font-weight-bold pb-4">Pulsa</div>
-                </v-card>
-              </v-col>
-              <v-col cols="2">
-                <v-card
-                  class="mx-auto my-4 text-center py-8"
-                  max-width="114"
-                  color="primary"
-                  dark
-                >
-                  <v-icon x-large> mdi-plus-box </v-icon>
-                </v-card>
-              </v-col>
-            </v-row>
+    <v-row dense wrap>
+      <v-col>
+        <v-card-title class="headline font-weight-bold"
+          >Manage Product</v-card-title
+        >
+        <v-card-subtitle class="title font-font-weight-bold"
+          >Categories</v-card-subtitle
+        >
+      </v-col>
+    </v-row>
 
-            <div class="text-right pr-4 pb-4">
-              <v-btn color="red" large dark>
-                <v-icon class="mr-2"> mdi-close </v-icon>
-                Close
+    <v-row dense wrap>
+      <v-col
+        v-for="(category, index) in categories"
+        :key="(category.Name, index)"
+        class="d-flex child-flex"
+        cols="6"
+        xs="3"
+        sm="3"
+        md="2"
+        lg="2"
+        xl="2"
+      >
+        <CategoryCard
+          :category-icon="category.icon"
+          :category-name="category.Name"
+          @click="showProductCard(category.ID)"
+        />
+      </v-col>
+      <v-col
+        class="d-flex child-flex"
+        cols="6"
+        xs="3"
+        sm="3"
+        md="2"
+        lg="2"
+        xl="2"
+      >
+        <ButtonCard dark height="145" width="145" @click="createCategory" />
+      </v-col>
+    </v-row>
+
+    <v-row dense wrap>
+      <v-col class="d-flex child-flex">
+        <v-card :class="['light', 'align-center', 'flat', 'card']">
+          <v-card-title class="title">
+            {{ categoryById.Name }}
+          </v-card-title>
+
+          <v-row dense wrap>
+            <v-col
+              v-for="(product, index) in productsByCategory"
+              :key="(product.slug, index)"
+              cols="4"
+              xs="4"
+              sm="3"
+              md="2"
+              lg="1"
+              xl="1"
+            >
+              <ProductCard
+                :product-src="product.Image"
+                @click="productDetail"
+              />
+              <!-- {{ productsByCategory.length }} -->
+            </v-col>
+            <v-col
+              cols="4"
+              xs="4"
+              sm="3"
+              md="2"
+              lg="1"
+              xl="1"
+              class="d-flex child-flex"
+            >
+              <ButtonCard dark @click="newProduct" />
+            </v-col>
+          </v-row>
+
+          <v-row dense wrap class="text-right">
+            <v-col>
+              <v-btn color="blue" dark @click="detailCategory">
+                <v-icon>mdi-eye-circle-outline</v-icon>
               </v-btn>
-            </div>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-  </div>
+              <v-btn color="red" dark @click.stop="showProduct = !showProduct">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 <script>
 import CategoryCard from '@/components/CategoryCard.vue'
+import ProductCard from '@/components/ProductCard.vue'
+import ButtonCard from '@/components/ButtonCard.vue'
+
 export default {
   name: 'ProductPage',
   components: {
     CategoryCard,
+    ProductCard,
+    ButtonCard,
   },
   middleware: ['auth'],
   data() {
     return {
-      showAddCategory: false,
-      activeClass: 'active',
+      showProduct: true,
     }
   },
   computed: {
-    productList() {
-      return this.$store.state.products.listProduct
+    countCustomers() {
+      return this.$store.getters['customers/list'].length
+    },
+    countProducts() {
+      return this.$store.getters['products/list'].length
+    },
+    categories() {
+      return this.$store.getters['categories/list']
+    },
+    categoryById() {
+      return this.$store.getters['categories/listById']
+    },
+    productsByCategory() {
+      return this.$store.getters['products/listByCategory']
     },
   },
   mounted() {
-    this.fetchProductList()
+    this.fetchListCustomer()
+    this.fetchListCategory()
+    this.fetchListProduct()
+    // this.fetchListProductByCategory()
   },
   methods: {
-    fetchProductList() {
-      this.$store.dispatch('products/fetchProduct')
+    // redirect to create category
+    createCategory() {
+      this.$router.push('/categories/create')
     },
+
+    // redirect to create product
+    newProduct() {
+      this.$router.push('/products/create')
+    },
+
+    // redirect to detail category
+    detailCategory() {
+      this.$router.push('/categories/' + this.categoryById.ID)
+    },
+
+    // redirect to detail product
+    productDetail() {
+      this.$router.push('/products/detail')
+    },
+
+    // redirect to action in store
+    // show products by category
+    showProductCard(id) {
+      // show product card
+      // this.showProduct = !this.showProduct
+      // fetch category by id
+      this.$store.dispatch('categories/fetchListById', id)
+      // fetch list product by category
+      this.$store.dispatch('products/fetchListByCategory', id)
+    },
+    fetchListCustomer() {
+      this.$store.dispatch('customers/fetchList')
+    },
+    fetchListCategory() {
+      this.$store.dispatch('categories/fetchList')
+    },
+    fetchListProduct() {
+      this.$store.dispatch('products/fetchList')
+    },
+    // fetchListProductByCategory(categoryId) {
+    //   this.showProduct = !this.showProduct
+    //   this.$store.dispatch('products/fetchListByCategory', categoryId)
+    // },
   },
 }
 </script>
-<style lang="scss" scoped>
-.active__card {
-  border: 2px solid $bayeue-primary;
+<style lang="scss" scope>
+.dark {
+  background-color: $bayeue-primary !important;
+  color: #fff;
+}
+.light {
+  background-color: #fff;
+  color: $bayeue-dark;
+}
+.card {
+  padding: 20px 10px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 20px rgba(6, 57, 67, 0.15) !important;
 }
 </style>

@@ -21,7 +21,11 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    '~/plugins/vuex-persist',
+    '~/plugins/persistedState.client.js',
+    '~/plugins/api',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -32,8 +36,6 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
-
-    'cookie-universal-nuxt',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -43,8 +45,8 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     '@nuxtjs/proxy',
-    '@nuxtjs/composition-api/module',
     'cookie-universal-nuxt',
+    '@nuxtjs/toast',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -54,9 +56,24 @@ export default {
     proxy: true,
   },
 
-  // Proxy module configuration: https://go.nuxtjs.dev/config-proxy
   proxy: {
-    '/api': 'http://localhost:19000',
+    '/api/': {
+      target: 'https://bayeue.thisham.my.id/api/',
+      pathRewrite: { '^/api/': '' },
+    },
+  },
+
+  toast: {
+    register: [
+      // Register custom toasts
+      {
+        name: 'my-error',
+        message: 'Oops...Something went wrong',
+        options: {
+          type: 'error',
+        },
+      },
+    ],
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

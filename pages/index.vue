@@ -5,6 +5,7 @@
         <v-col cols="7">
           <v-card height="467">
             <v-card-title> Sales </v-card-title>
+
             <v-card-content>
               <v-sparkline
                 :value="value"
@@ -109,7 +110,6 @@
         <v-col cols="5">
           <v-card height="467">
             <v-card-title> Top User </v-card-title>
-
             <template>
               <v-simple-table>
                 <template v-slot:default>
@@ -123,7 +123,6 @@
                           {{ item.category }}
                         </div>
                       </td>
-
                       <td>
                         <h3 class="text-right">
                           {{ item.transaction }} Transaction
@@ -152,117 +151,10 @@ const gradients = [
 ]
 
 export default {
-  name: 'DashboardAdmin',
+  name: 'DashboardPage',
+  middleware: ['auth'],
   data() {
     return {
-      drawer: false,
-      itemsDrawer: [
-        { title: 'Dashboard', icon: 'mdi-view-dashboard' },
-        { title: 'Admin', icon: 'mdi-account' },
-        { title: 'Product', icon: 'mdi-cube' },
-      ],
-      dataTopProduct: [
-        {
-          name: 'Listrik',
-          category: 'Payment',
-          sales: 70,
-        },
-        {
-          name: 'Pulsa',
-          category: 'Payment',
-          sales: 54,
-        },
-        {
-          name: 'Top Up Shopee Pay',
-          category: 'Top up',
-          sales: 47,
-        },
-        {
-          name: 'Internet',
-          category: 'Payment',
-          sales: 43,
-        },
-        {
-          name: 'Transfer BRI',
-          category: 'Top up',
-          sales: 47,
-        },
-        {
-          name: 'Top Up Dana',
-          category: 'Top up',
-          sales: 22,
-        },
-      ],
-      dataTopUser: [
-        {
-          name: 'Slamet',
-          category: 'Payment',
-          transaction: 70,
-        },
-        {
-          name: 'Yanto',
-          category: 'Payment',
-          transaction: 54,
-        },
-        {
-          name: 'Budi',
-          category: 'Top up',
-          transaction: 47,
-        },
-        {
-          name: 'Kristin',
-          category: 'Payment',
-          transaction: 43,
-        },
-        {
-          name: 'Farhan',
-          category: 'Top up',
-          transaction: 47,
-        },
-        {
-          name: 'Nurdin',
-          category: 'Top up',
-          transaction: 22,
-        },
-      ],
-      dataTransactions: [
-        {
-          name: 'Payment from Bonnie Green',
-          date: 'Apr 23, 2021',
-          amount: 2300,
-          status: 'Completed',
-        },
-        {
-          name: 'Payment refund to #00910',
-          date: 'Apr 23, 2021',
-          amount: 2300,
-          status: 'Completed',
-        },
-        {
-          name: 'Payment from Bonnie Green',
-          date: 'Apr 23, 2021',
-          amount: -670,
-          status: 'Completed',
-        },
-        {
-          name: 'Payment failed from #087651',
-          date: 'Apr 18  2021',
-          amount: 234,
-          status: 'Cancelled',
-        },
-        {
-          name: 'Payment from Bonnie Green',
-          date: 'Apr 15, 2021',
-          amount: 5000,
-          status: 'In progress',
-        },
-        {
-          name: 'Payment from Bonnie Green',
-          date: 'Apr 15, 2021',
-          amount: 2300,
-          status: 'In progress',
-        },
-      ],
       width: 2,
       radius: 10,
       padding: 8,
@@ -275,6 +167,30 @@ export default {
       type: 'trend',
       autoLineWidth: false,
     }
+  },
+  computed: {
+    dataTopProduct() {
+      return this.$store.state.dataTopProduct
+    },
+    dataTopUser() {
+      return this.$store.state.dataTopUser
+    },
+    dataTransactions() {
+      return this.$store.state.dataTransactions
+    },
+  },
+  created() {},
+  methods: {
+    getAuthenticated() {
+      const authStatus = this.$store.dispatch.getters(['auth/isAuthenticated'])
+
+      if (authStatus === true) {
+        return this.$toast.open({
+          message: 'You are logged in',
+          type: 'success',
+        })
+      }
+    },
   },
 }
 </script>
