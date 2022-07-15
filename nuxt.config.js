@@ -1,12 +1,19 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
+  // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
+  ssr: false,
+
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
+  generate: {
+    fallback: true,
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s',
+    titleTemplate: '%s' - 'Bayeue',
     title: 'Bayeue',
     meta: [
       { charset: 'utf-8' },
@@ -22,9 +29,9 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~/plugins/vuex-persist',
+    // '~/plugins/vuex-persist',
     '~/plugins/persistedState.client.js',
-    '~/plugins/api',
+    // '~/plugins/api',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -45,14 +52,13 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     '@nuxtjs/proxy',
-    'cookie-universal-nuxt',
     '@nuxtjs/toast',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: 'https://bayeue.thisham.my.id/api/',
     proxy: true,
   },
 
@@ -60,6 +66,15 @@ export default {
     '/api/': {
       target: 'https://bayeue.thisham.my.id/api/',
       pathRewrite: { '^/api/': '' },
+    },
+  },
+
+  devServer: {
+    proxy: {
+      '/api/': {
+        target: 'https://bayeue.thisham.my.id/api/',
+        pathRewrite: { '^/api/': '' },
+      },
     },
   },
 

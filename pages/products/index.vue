@@ -82,7 +82,7 @@
           <v-row dense wrap>
             <v-col
               v-for="(product, index) in productsByCategory"
-              :key="(product.slug, index)"
+              :key="(product.ID, index)"
               cols="4"
               xs="4"
               sm="3"
@@ -92,9 +92,9 @@
             >
               <ProductCard
                 :product-src="product.Image"
-                @click="productDetail(product.Product_Slug)"
+                @click="productDetailBySlug(product.Product_Slug)"
               />
-              <!-- {{ productsByCategory.length }} -->
+              <!-- {{ productsByCategory }} -->
             </v-col>
             <v-col
               cols="4"
@@ -111,6 +111,9 @@
 
           <v-row dense wrap class="text-right">
             <v-col>
+              <v-btn color="grey" dark @click="updateCategory">
+                <v-icon>mdi-eye-circle</v-icon>
+              </v-btn>
               <v-btn color="blue" dark @click="detailCategory">
                 <v-icon>mdi-eye-circle-outline</v-icon>
               </v-btn>
@@ -176,38 +179,43 @@ export default {
     },
 
     // redirect to detail category
+    updateCategory() {
+      this.$router.push('/categories/' + this.categoryById.ID)
+    },
+
+    // redirect to detail category
     detailCategory() {
       this.$router.push('/categories/' + this.categoryById.ID)
     },
 
-    // redirect to detail product
-    productDetail(_slug) {
-      this.$router.push(`/products/${_slug}`)
+    // redirect to detail list product by id
+    productDetailById(id) {
+      this.$router.push(`/products/${id}`)
+    },
+    // redirect to detail list product by slug
+    productDetailBySlug(slug) {
+      this.$router.push(`/products/detail/${slug}`)
     },
 
     // redirect to action in store
     // show products by category
     showProductCard(id) {
-      // show product card
-      // this.showProduct = !this.showProduct
-      // fetch category by id
-      this.$store.dispatch('categories/fetchListById', id)
-      // fetch list product by category
-      this.$store.dispatch('products/fetchListByCategory', id)
+      try {
+        this.$store.dispatch('categories/fetchListById', id)
+        this.$store.dispatch('products/fetchListByCategory', id)
+      } catch (e) {
+        console.log(e)
+      }
     },
-    fetchListCustomer() {
-      this.$store.dispatch('customers/fetchList')
+    async fetchListCustomer() {
+      await this.$store.dispatch('customers/fetchList')
     },
-    fetchListCategory() {
-      this.$store.dispatch('categories/fetchList')
+    async fetchListCategory() {
+      await this.$store.dispatch('categories/fetchList')
     },
     fetchListProduct() {
       this.$store.dispatch('products/fetchList')
     },
-    // fetchListProductByCategory(categoryId) {
-    //   this.showProduct = !this.showProduct
-    //   this.$store.dispatch('products/fetchListByCategory', categoryId)
-    // },
   },
 }
 </script>

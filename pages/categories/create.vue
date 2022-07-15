@@ -1,27 +1,46 @@
 <template>
-  <div class="ml-4">
-    <!-- <v-form @click.prevent="handleSubmit">
-      <div class="font-weight-bold display-1 mb-8">
-        <v-btn icon to="/products" class="mr-4">
-          <v-icon color="primary"> mdi-arrow-left </v-icon>
-        </v-btn>
-        Create New Category
-      </div>
-      <div class="font-weight-bold headline mb-3">Category Name</div>
+  <v-container class="blank-center pa-10">
+    <v-row class="d-flex flex-column">
+      <v-col cols="12">
+        <v-card-title class="font-weight-bold mb-8">
+          <v-btn icon to="/products" class="mr-4">
+            <v-icon color="primary"> mdi-arrow-left </v-icon>
+          </v-btn>
+          Create New Category
+        </v-card-title>
+      </v-col>
 
-      <v-row column>
-        <v-col cols="6">
+      <v-col cols="12" md="6" justify="center">
+        <form @click.prevent="storeCategory">
+          <div class="font-weight-bold title mb-3">Category name</div>
           <v-text-field
-            v-model="categoryName"
-            placeholder="Nama category baru"
+            v-model="category.name"
+            placeholder="What is the name of this category?"
             required
             solo
           >
           </v-text-field>
-       
-          <div class="font-weight-bold headline my-3">Pilih icon</div>
 
-          <v-card>
+          <div class="font-weight-bold title mb-3">Category icon</div>
+          <v-text-field
+            v-model="category.icon"
+            placeholder="What is the name of this category?"
+            required
+            solo
+          >
+          </v-text-field>
+
+          <!-- <div class="font-weight-bold title my-3">Upload Image</div>
+        <v-file-input
+          v-model="category.imageUrl"
+          counter
+          placeholder="Upload an image"
+          required
+          solo
+        >
+        </v-file-input> -->
+
+          <!-- <v-card>
             <v-card-actions v-model="categoryIcon">
               <v-btn value="mdi-home-outline" icon>
                 <v-icon color="primary"> mdi-home-outline </v-icon>
@@ -39,39 +58,13 @@
                 <v-icon color="primary"> mdi-play-box-outline </v-icon>
               </v-btn>
             </v-card-actions>
-          </v-card>
+          </v-card> -->
 
-         
-            <v-btn type="submit" color="primary" class="px-10 mt-10" large>
-              Add
-            </v-btn>
-          </v-col>
-        </v-col>
-      </v-row>
-    </v-form> -->
-    <div>
-      <div class="container">
-        <form @submit.prevent="onSubmit">
-          <!-- <div class="form-group">
-            <input type="file" @change="onFileUpload" />
-          </div> -->
-          <div class="form-group">
-            <input
-              type="text"
-              v-model="name"
-              placeholder="Name"
-              class="form-control"
-            />
-          </div>
-          <div class="form-group">
-            <button class="btn btn-primary btn-block btn-lg">
-              Upload File
-            </button>
-          </div>
+          <v-btn type="submit" color="primary" class="px-10 mt-10"> Add </v-btn>
         </form>
-      </div>
-    </div>
-  </div>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -79,37 +72,42 @@ export default {
   name: 'CreateCategoryPage',
   data() {
     return {
-      // FILE: null,
-      name: '',
-      categoryName: '',
-      categoryIcon: '',
+      category: {
+        name: '',
+        icon: '',
+        imageUrl: '',
+      },
     }
   },
+  computed: {
+    token() {
+      // return this.$store.getters['auth/isToken']
+      return this.localStorage.getItem('token')
+    },
+  },
   methods: {
-    // handleSubmit() {
-    //   const formData = new FormData()
-    //   FormData.append('categoryName', this.categoryName)
-    //   FormData.append('icon', this.categoryIcon)
-
-    //   this.$store.dispatch('categories/create', formData).then(() => {
-    //     this.$router.push('/categories')
-    //   })
-    // },
-    //  onFileUpload (event) {
-    //       this.FILE = event.target.files[0]
-    //     },
-    onSubmit() {
-      // upload file
+    async storeCategory() {
+      const data = this.category
       const formData = new FormData()
-      // formData.append('avatar', this.FILE, this.FILE.name)
-      formData.append('name', this.name)
-      console.log(formData)
-      // axios.post('API GOES HERE', formData, {}).then((res) => {
-      //   console.log(res)
-      // })
+      formData.append('name', data.name)
+      formData.append('icon', data.icon)
+
+      // const param = {
+      // name: this.category.name,
+      // icon: this.category.icon,
+      // imageUrl: this.category.imageUrl,
+      // token: this.token,
+      // }
+
+      await this.$store.dispatch('categories/storeCategory', formData)
     },
   },
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.blank-center {
+  height: calc(100%);
+}
+</style>
+>

@@ -1,19 +1,22 @@
 <template>
   <v-app>
-    <v-app-bar app dark color="#3aa2dc" height="72" class="px-16">
-      <img src="@/assets/img/logo-putih.png" height="34" alt="" />
-
-      <v-btn text class="ml-16"> Home </v-btn>
-      <v-btn text> Feature </v-btn>
-      <v-btn text> About </v-btn>
-
+    <v-app-bar app dark color="#3aa2dc">
+      <v-toolbar-title>
+        <v-img :src="logo"></v-img>
+      </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn color="white" class="primary--text" rounded> Download </v-btn>
+      <div>
+        <v-btn text> Home </v-btn>
+        <v-btn text> Feature </v-btn>
+        <v-btn text> About </v-btn>
+        <v-btn color="white" class="primary--text" rounded> Download </v-btn>
+      </div>
     </v-app-bar>
 
-    <v-row class="content-1 px-16">
+    <v-row class="content-1">
       <v-col cols="5" class="text-right">
-        <img src="@/assets/img/phone.png" height="600px" alt="" />
+        <div class="background"></div>
+        <!-- <img src="@/assets/img/phone.png" height="600px" alt="" /> -->
       </v-col>
 
       <v-col cols="7" class="my-auto px-12">
@@ -182,12 +185,27 @@
 export default {
   name: 'LandingPage',
   layout: 'blank',
+  data() {
+    return {
+      logo: './assets/img/logo-putih.png',
+      image: '@/assets/img/background.svg',
+    }
+  },
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.background {
+  background-image: url('@/assets/img/background.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 110vh;
+  width: 100vw;
+  z-index: 10;
+}
+
 .content-1 {
-  margin-top: 72px !important ;
+  margin-top: 8.304498269896193vh !important ;
   background-color: #f0f4f7;
 }
 .heading-1 {

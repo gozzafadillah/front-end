@@ -1,12 +1,6 @@
-// export default function ({ $axios, redirect }) {
-//   $axios.onRequest((config) => {
-//     console.log('Making request to ' + config.url)
-//   })
+import Cookies from 'js-cookie'
 
-//   $axios.onError((error) => {
-//     const code = parseInt(error.response && error.response.status)
-//     if (code === 400) {
-//       redirect('/400')
-//     }
-//   })
-// }
+export default function ({ $axios, store }) {
+  $axios.setHeader('Content-Type', 'application/json')
+  $axios.setToken(Cookies.get('t'), 'Bearer')
+}

@@ -9,12 +9,7 @@
       class="text-center mx-auto my-auto"
     >
       <NuxtLink to="/">
-        <v-img
-          src="assets/img/bayeue.png"
-          contain
-          aspect-ratio="4"
-          alt=""
-        ></v-img>
+        <v-img src="bayeue.png" contain aspect-ratio="4" alt=""></v-img>
       </NuxtLink>
     </v-col>
     <v-col cols="12" md="7" lg="7" xl="8" class="form-daftar px-10">
@@ -83,14 +78,6 @@ export default {
 }
 </script>
 <style scoped>
-.mobile {
-  height: 100px;
-}
-
-.dekstop {
-  height: 100vh;
-}
-
 .form-daftar {
   padding-top: 15%;
   background-color: #e3f4fe;

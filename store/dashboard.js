@@ -104,16 +104,23 @@ export const state = () => ({
   ],
 })
 
+// Getters
+export const getters = {
+  isDataTopProduct: (state) => state.dataTopProduct,
+  isDataTopUser: (state) => state.dataTopUser,
+  isDataTransactions: (state) => state.dataTransactions,
+}
+
 // Mutations
 export const mutations = {
   setDataTopProduct(state, param) {
     state.dataTopProduct = param
   },
   setDataTopUser(state, param) {
-    state.dataTopProduct = param
+    state.dataTopUser = param
   },
   setDataTransactions(state, param) {
-    state.dataTopProduct = param
+    state.dataTransactions = param
   },
 }
 

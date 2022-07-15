@@ -47,8 +47,8 @@ export const actions = {
       if (response.rescode >= 200 || response.rescode < 400) {
         store.commit('setAuthenticated', true)
         store.commit('setToken', response.data.token)
+        localStorage.setItem('token', response.data.token)
       }
-      localStorage.setItem('token', response.data.token)
 
       // setup notification
       const message = response.message
@@ -78,7 +78,6 @@ export const actions = {
     try {
       const response = await this.$axios.$get('admin/users')
       console.log(response.rescode)
-
       store.commit('setUser', response.result)
     } catch (error) {
       console.log('Error: ', error)

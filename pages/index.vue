@@ -152,6 +152,7 @@ const gradients = [
 
 export default {
   name: 'DashboardPage',
+  middleware: ['auth'],
   data() {
     return {
       width: 2,
@@ -169,13 +170,13 @@ export default {
   },
   computed: {
     dataTopProduct() {
-      return this.$store.state.dataTopProduct
+      return this.$store.getters['dashboard/isDataTopProduct']
     },
     dataTopUser() {
-      return this.$store.state.dataTopUser
+      return this.$store.getters['dashboard/isDataTopUser']
     },
     dataTransactions() {
-      return this.$store.state.dataTransactions
+      return this.$store.getters['dashboard/isDataTransactions']
     },
   },
   created() {},

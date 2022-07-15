@@ -101,7 +101,7 @@
 <script>
 export default {
   name: 'DefaultLayout',
-  middleware: ['auth'],
+  // middleware: ['auth'],
   data() {
     return {
       clipped: false,
