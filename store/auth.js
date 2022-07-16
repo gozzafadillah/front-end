@@ -3,6 +3,7 @@ export const state = () => ({
   authenticated: false,
   token: null,
   user: {},
+  info: null,
 })
 
 // Getters
@@ -15,6 +16,9 @@ export const getters = {
   },
   isUser(state) {
     return state.user
+  },
+  isInfo(state) {
+    return state.info
   },
 }
 
@@ -29,6 +33,9 @@ export const mutations = {
   setUser(state, param) {
     state.user = param
   },
+  setInfo(state, param) {
+    state.info = param
+  },
 }
 
 // Actions
@@ -40,20 +47,12 @@ export const actions = {
         email: param.email,
         password: param.password,
       }
+      // console.log(data)
       // hit api to get token
       const response = await this.$axios.$post('login', data)
 
       console.log(response.rescode)
 
-      if (response.rescode >= 200 || response.rescode < 400) {
-        store.commit('setAuthenticated', true)
-        store.commit('setToken', response.data.token)
-        localStorage.setItem('token', response.data.token)
-        store.commit('setUser', data)
-        console.log(data)
-      }
-
-      // setup notification
       const message = response.message
       const notification = message.split(' ')
 
@@ -63,17 +62,28 @@ export const actions = {
       }
       const notificationMessage = notification.join(' ')
 
-      // show notification
+      if (response.rescode >= 200 || response.rescode < 400) {
+        store.commit('setAuthenticated', true)
+        store.commit('setToken', response.data.token)
+        store.commit('setInfo', response.data.message)
+        localStorage.setItem('token', response.data.token)
+        store.commit('setUser', data)
+      }
+
+      // show notification success
       this.$toast.success(`${notificationMessage}!`, {
         position: 'top-right',
         duration: 3000,
         fitToScreen: true,
       })
-
       // redirect to dashboard
       this.$router.push('/')
     } catch (error) {
-      console.log('Error: ', error)
+      this.$toast.error(`Failed login!`, {
+        position: 'top-right',
+        duration: 3000,
+        fitToScreen: true,
+      })
     }
   },
 

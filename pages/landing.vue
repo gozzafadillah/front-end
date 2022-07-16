@@ -1,25 +1,38 @@
 <template>
-  <v-app>
-    <v-app-bar app dark color="#3aa2dc">
+  <v-container-fluid>
+    <v-app-bar color="#3aa2dc" height="80" class="mx-auto">
       <v-toolbar-title>
-        <v-img :src="logo"></v-img>
+        <v-img :src="require(`~/assets/img/${logo}`)" width="136"></v-img>
       </v-toolbar-title>
+
       <v-spacer></v-spacer>
-      <div>
-        <v-btn text> Home </v-btn>
-        <v-btn text> Feature </v-btn>
-        <v-btn text> About </v-btn>
-        <v-btn color="white" class="primary--text" rounded> Download </v-btn>
-      </div>
+
+      <v-list flat color="3aa2dc">
+        <v-list-item-group>
+          <v-list-item-action v-for="(menu, i) in menus" :key="i">
+            <v-list-item-title>
+              <v-btn :to="menu.to" :exact="menu.exact" color="primary">
+                {{ menu.title }}
+              </v-btn>
+            </v-list-item-title>
+            <!-- <v-btn text> Home </v-btn>
+            <v-btn text> Feature </v-btn>
+            <v-btn text> About </v-btn>
+            <v-btn color="white" class="primary--text" rounded>
+              Download
+            </v-btn> -->
+          </v-list-item-action>
+        </v-list-item-group>
+      </v-list>
     </v-app-bar>
 
-    <v-row class="content-1">
-      <v-col cols="5" class="text-right">
+    <v-row class="pt-16">
+      <v-col cols="12" md="6" class="text-right">
         <div class="background"></div>
         <!-- <img src="@/assets/img/phone.png" height="600px" alt="" /> -->
       </v-col>
 
-      <v-col cols="7" class="my-auto px-12">
+      <v-col cols="12" md="6" class="my-auto px-12">
         <div class="heading-1">Provide Convenience in Transactions</div>
 
         <div class="body-leguler">
@@ -178,7 +191,7 @@
         </v-col>
       </v-row>
     </v-footer>
-  </v-app>
+  </v-container-fluid>
 </template>
 
 <script>
@@ -187,10 +200,29 @@ export default {
   layout: 'blank',
   data() {
     return {
-      logo: './assets/img/logo-putih.png',
+      drawer: false,
+      logo: 'logo-putih.png',
       image: '@/assets/img/background.svg',
+      menus: [
+        {
+          name: 'Home',
+          icon: 'mdi-home',
+          link: '/',
+        },
+        {
+          name: 'About',
+          icon: 'mdi-account-circle',
+          link: '/about',
+        },
+        {
+          name: 'Contact',
+          icon: 'mdi-email',
+          link: '/contact',
+        },
+      ],
     }
   },
+  computed: {},
 }
 </script>
 
@@ -202,6 +234,10 @@ export default {
   min-height: 110vh;
   width: 100vw;
   z-index: 10;
+
+  @media (max-width: 992px) {
+    min-height: 50vh;
+  }
 }
 
 .content-1 {
