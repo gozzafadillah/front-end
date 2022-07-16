@@ -3,7 +3,6 @@ export const state = () => ({
   authenticated: false,
   token: null,
   user: {},
-  info: null,
 })
 
 // Getters
@@ -16,9 +15,6 @@ export const getters = {
   },
   isUser(state) {
     return state.user
-  },
-  isInfo(state) {
-    return state.info
   },
 }
 
@@ -33,29 +29,22 @@ export const mutations = {
   setUser(state, param) {
     state.user = param
   },
-  setInfo(state, param) {
-    state.info = param
-  },
 }
 
 // Actions
 export const actions = {
-  async fetchLogin(store, param) {
+  async fetchLogin(store, payload) {
     // console.log(param)
     try {
-      const data = {
-        email: param.email,
-        password: param.password,
-      }
       // console.log(data)
       // hit api to get token
-      const response = await this.$axios.$post('login', data)
+      const response = await this.$axios.$post('login', payload)
 
       console.log(response.rescode)
+      console.log(response)
 
       const message = response.message
       const notification = message.split(' ')
-
       for (let i = 0; i < notification.length; i++) {
         notification[i] =
           notification[i].charAt(0).toUpperCase() + notification[i].slice(1)
@@ -63,27 +52,19 @@ export const actions = {
       const notificationMessage = notification.join(' ')
 
       if (response.rescode >= 200 || response.rescode < 400) {
-        store.commit('setAuthenticated', true)
         store.commit('setToken', response.data.token)
-        store.commit('setInfo', response.data.message)
-        localStorage.setItem('token', response.data.token)
-        store.commit('setUser', data)
+        localStorage.setItem('token', JSON.stringify(response.data.token))
+        localStorage.setItem('user', JSON.stringify(payload))
+        store.commit('setAuthenticated', true)
+        store.commit('setUser', payload)
       }
 
       // show notification success
-      this.$toast.success(`${notificationMessage}!`, {
-        position: 'top-right',
-        duration: 3000,
-        fitToScreen: true,
-      })
+      this.$toast.success(`${notificationMessage}!`)
       // redirect to dashboard
       this.$router.push('/')
     } catch (error) {
-      this.$toast.error(`Failed login!`, {
-        position: 'top-right',
-        duration: 3000,
-        fitToScreen: true,
-      })
+      this.$toast.error(`Failed login!`)
     }
   },
 

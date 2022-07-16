@@ -1,59 +1,45 @@
 <template>
-  <v-row>
-    <v-col
-      cols="12"
-      md="5"
-      lg="5"
-      xl="4"
-      justify="center"
-      class="text-center mx-auto my-auto"
-    >
-      <NuxtLink to="/">
-        <v-img
-          :src="require(`~/static/assets/img/${logo}`)"
-          contain
-          aspect-ratio="4"
-          alt=""
-        ></v-img>
-      </NuxtLink>
+  <v-row class="form__login" wrap justify="center" align="center" fill-height>
+    <v-col cols="12" md="5" lg="5" xl="4">
+      <div class="logo__login">
+        <NuxtLink to="/">
+          <v-img
+            :src="require(`~/static/assets/${logo}`)"
+            contain
+            aspect-ratio="1"
+            alt="Logo Bayeue"
+          ></v-img>
+        </NuxtLink>
+      </div>
     </v-col>
-    <v-col cols="12" md="7" lg="7" xl="8" class="form-daftar px-10">
-      <div class="heading-1 mb-10 text-center">Login</div>
-      <form @submit.prevent="handleSubmit">
-        <div class="body-regular-2 mb-2">Email</div>
-
-        <v-text-field
-          v-model="email"
-          placeholder="Masukan email anda"
-          required
-          solo
-        ></v-text-field>
-
-        <div class="body-regular-2 mb-2">Kata Sandi</div>
-
-        <v-text-field
-          v-model="password"
-          placeholder="Masukan kata sandi anda"
-          required
-          solo
-          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-          :type="showPassword ? 'text' : 'password'"
-          @click:append="showPassword = !showPassword"
-        ></v-text-field>
-
-        <div class="text-center">
-          <v-btn
-            type="submit"
-            name="submit"
-            color="#528bcc"
-            dark
-            large
-            class="px-10"
-          >
-            Login
-          </v-btn>
-        </div>
-      </form>
+    <v-col cols="12" md="7" lg="7" xl="8">
+      <v-row justify="center">
+        <v-col cols="10" md="6">
+          <h2 class="heading__login mb-10 text-center">Login</h2>
+          <form @submit.prevent="handleSubmit">
+            <div class="title__login mb-2">Email</div>
+            <v-text-field
+              v-model="email"
+              placeholder="Enter your email!"
+              required
+              solo
+            ></v-text-field>
+            <div class="title__login mb-2">Password</div>
+            <v-text-field
+              v-model="password"
+              placeholder="Enter your password!"
+              required
+              solo
+              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="showPassword ? 'text' : 'password'"
+              @click:append="showPassword = !showPassword"
+            ></v-text-field>
+            <v-btn block type="submit" name="submit" color="#528bcc" dark large>
+              Login
+            </v-btn>
+          </form>
+        </v-col>
+      </v-row>
     </v-col>
   </v-row>
 </template>
@@ -64,7 +50,8 @@ export default {
   layout: 'blank',
   data() {
     return {
-      logo: 'bayeue.png',
+      // logo: 'bayeue.png',
+      logo: 'bayeue_circle.svg',
       showPassword: false,
       email: '',
       password: '',
@@ -75,31 +62,42 @@ export default {
   },
   methods: {
     async handleSubmit() {
-      await this.$store.dispatch('auth/fetchLogin', {
+      const payload = {
         email: this.email,
         password: this.password,
-      })
+      }
+      await this.$store.dispatch('auth/fetchLogin', payload)
     },
   },
 }
 </script>
-<style scoped>
-.form-daftar {
-  padding-top: 15%;
-  background-color: #e3f4fe;
+<style lang="scss" scoped>
+.logo__login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  min-height: 100vh;
+  @media screen and (max-width: 720px) {
+    background-color: inherit;
+    min-height: 60px;
+  }
 }
-.heading-1 {
-  font-family: 'Nunito', sans-serif;
-  font-weight: 700;
-  font-size: 42px;
-  line-height: 43.65px;
-  color: #528bcc;
+.form__login {
+  background-color: $bayeue-primary-light;
 }
-.body-regular-2 {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 16.42px;
-  color: #2e5786;
+.heading__login {
+  font-size: 60px;
+  color: $bayeue-dark;
+  @media screen and (max-width: 720px) {
+    font-size: 32px;
+  }
+}
+.title__login {
+  font-size: 24px;
+  color: $bayeue-dark;
+  @media screen and (max-width: 720px) {
+    font-size: 16px;
+  }
 }
 </style>

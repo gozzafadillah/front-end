@@ -1,19 +1,16 @@
 <template>
   <v-container>
     <v-row>
-      <v-col>
-        {{ transactions }}
-      </v-col>
+      <v-col> Transactions: {{ transactions }} </v-col>
     </v-row>
   </v-container>
 </template>
 <script>
 export default {
   name: 'TransactionPage',
-  data() {},
   computed: {
     transactions() {
-      return this.$store.getters.transactions.list
+      return this.$store.getters['transactions/list']
     },
   },
   mounted() {

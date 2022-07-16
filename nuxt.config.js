@@ -27,7 +27,7 @@ export default {
   plugins: [
     // '~/plugins/vuex-persist',
     '~/plugins/persistedState.client.js',
-    // '~/plugins/axios.js',
+    '~/plugins/axios.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -56,7 +56,11 @@ export default {
     baseURL: 'https://bayeue.thisham.my.id/api/',
   },
 
-  toast: {},
+  toast: {
+    position: 'top-right',
+    duration: 3000,
+    fitToScreen: true,
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {

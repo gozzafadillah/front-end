@@ -19,17 +19,20 @@ export const mutations = {
 export const actions = {
   async fetchList(store) {
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-          'Content-Type': 'application/json',
-        },
-      }
-
-      const response = await this.$axios.$get('admin/transactions', config)
+      // const token = localStorage.getItem('token')
+      // console.log(token)
+      // const config = {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // }
+      const response = await this.$axios.$get('admin/transaction')
+      const { data } = JSON.stringify(response)
       // console.log(`Message: ${response.message}`)
       // console.log(response.rescode)
-      store.commit('setList', response.result)
+      // console.log(response.message)
+      console.log(data)
+      store.commit('setList', response.data.result)
     } catch (error) {
       console.log('Error: ', error)
     }

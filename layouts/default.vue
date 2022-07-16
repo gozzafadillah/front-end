@@ -123,6 +123,7 @@ export default {
           icon: 'mdi-cart-outline',
           title: 'Transactions',
         },
+        { link: 'users', icon: 'mdi-account-circle', title: 'Customers' },
       ],
     }
   },
