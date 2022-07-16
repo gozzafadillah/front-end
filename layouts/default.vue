@@ -5,11 +5,13 @@
         <div>
           <v-list-item>
             <v-list-item-content>
-              <div class="text-center">
-                <NuxtLink to="/">
-                  <img src="assets/img/bayeue.png" alt="alt" width="180" />
-                </NuxtLink>
-              </div>
+              <NuxtLink to="/">
+                <v-img
+                  :src="require(`~/static/assets/img/${logo}`)"
+                  alt="alt"
+                  width="180"
+                ></v-img>
+              </NuxtLink>
             </v-list-item-content>
           </v-list-item>
 
@@ -48,11 +50,11 @@
                       color="grey lighten-4"
                       class="text-center"
                     >
-                      <img :src="user.avatar" alt="alt" />
+                      <v-icon>mdi-face-agent</v-icon>
                     </v-avatar>
                     <div class="d-flex mx-2">
                       <span class="blue-grey--text">
-                        {{ user.name }}
+                        {{ userLogin.email }}
                       </span>
                     </div>
                   </v-layout>
@@ -62,7 +64,7 @@
 
             <v-list>
               <v-layout column>
-                <v-list-item
+                <!-- <v-list-item
                   v-for="(account, index) in accounts"
                   :key="index"
                   :to="`/${account.link}`"
@@ -70,10 +72,10 @@
                   <v-list-item-content class="d-block text-center">
                     <v-item-title>{{ account.title }}</v-item-title>
                   </v-list-item-content>
-                </v-list-item>
+                </v-list-item> -->
                 <v-list-item @click="handleLogout">
                   <v-list-item-content class="d-block text-center">
-                    <v-item-title>Logout</v-item-title>
+                    <v-list-item-title>Logout</v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-layout>
@@ -105,11 +107,11 @@ export default {
   data() {
     return {
       clipped: false,
-      drawer: true,
+      drawer: false,
       fixed: false,
+      logo: 'bayeue.png',
       user: [
         {
-          name: 'Nanda HM',
           avatar: 'icon.png',
         },
       ],
@@ -117,10 +119,12 @@ export default {
         { link: '', icon: 'mdi-view-dashboard', title: 'Overview' },
         { link: 'products', icon: 'mdi-cube', title: 'Products' },
       ],
-      accounts: [
-        { link: 'setting', icon: 'mdi-cog-outline', title: 'Setting' },
-      ],
     }
+  },
+  computed: {
+    userLogin() {
+      return this.$store.getters['auth/isUser']
+    },
   },
   methods: {
     handleLogout() {
