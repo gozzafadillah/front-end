@@ -99,7 +99,7 @@ export default {
       // token: this.token,
       // }
 
-      await this.$store.dispatch('categories/storeCategory', formData)
+      await this.$store.dispatch('categories/storeCategory', data)
     },
   },
 }

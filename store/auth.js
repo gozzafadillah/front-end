@@ -2,7 +2,7 @@
 export const state = () => ({
   authenticated: false,
   token: null,
-  user: [],
+  user: {},
 })
 
 // Getters
@@ -36,11 +36,12 @@ export const actions = {
   async fetchLogin(store, param) {
     // console.log(param)
     try {
-      // hit api to get token
-      const response = await this.$axios.$post('/api/login', {
+      const data = {
         email: param.email,
         password: param.password,
-      })
+      }
+      // hit api to get token
+      const response = await this.$axios.$post('login', data)
 
       console.log(response.rescode)
 
@@ -48,6 +49,8 @@ export const actions = {
         store.commit('setAuthenticated', true)
         store.commit('setToken', response.data.token)
         localStorage.setItem('token', response.data.token)
+        store.commit('setUser', data)
+        console.log(data)
       }
 
       // setup notification
@@ -74,15 +77,17 @@ export const actions = {
     }
   },
 
-  async fetchUsers(store) {
-    try {
-      const response = await this.$axios.$get('admin/users')
-      console.log(response.rescode)
-      store.commit('setUser', response.result)
-    } catch (error) {
-      console.log('Error: ', error)
-    }
-  },
+  // async fetchUsers(store) {
+  //   try {
+  //     const response = await this.$axios.$get('admin/users')
+  //     // console.log(`Message: ${response.message}`)
+  //     // console.log(response.rescode)
+  //     console.log(response)
+  //     store.commit('setUser', response.result)
+  //   } catch (error) {
+  //     console.log('Error: ', error)
+  //   }
+  // },
 
   fetchLogout(store) {
     store.commit('setAuthenticated', false)

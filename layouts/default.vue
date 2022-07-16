@@ -87,7 +87,7 @@
 
     <v-app-bar flat app fixed color="#F0F4F7">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-app-bar-title v-if="drawer == false" transition="scale-transition">
+      <v-app-bar-title v-if="drawer === false" transition="scale-transition">
         <Nuxt-Link to="/" class="font-weight-black text-decoration-none">
           <span class="brand">Bayeue</span>
         </Nuxt-Link>
@@ -107,7 +107,7 @@ export default {
   data() {
     return {
       clipped: false,
-      drawer: false,
+      drawer: true,
       fixed: false,
       logo: 'bayeue.png',
       user: [
@@ -118,6 +118,11 @@ export default {
       items: [
         { link: '', icon: 'mdi-view-dashboard', title: 'Overview' },
         { link: 'products', icon: 'mdi-cube', title: 'Products' },
+        {
+          link: 'transactions',
+          icon: 'mdi-cart-outline',
+          title: 'Transactions',
+        },
       ],
     }
   },

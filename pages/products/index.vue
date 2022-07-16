@@ -54,7 +54,7 @@
         xl="2"
       >
         <CategoryCard
-          :category-icon="category.icon"
+          :category-src="category.Image"
           :category-name="category.Name"
           @click="showProductCard(category.ID)"
         />
@@ -199,12 +199,12 @@ export default {
 
     // redirect to action in store
     // show products by category
-    showProductCard(id) {
+    async showProductCard(id) {
       try {
-        this.$store.dispatch('categories/fetchListById', id)
-        this.$store.dispatch('products/fetchListByCategory', id)
-      } catch (e) {
-        console.log(e)
+        await this.$store.dispatch('categories/fetchListById', id)
+        await this.$store.dispatch('products/fetchListByCategory', id)
+      } catch (error) {
+        console.log('error: ', error)
       }
     },
     async fetchListCustomer() {
@@ -213,8 +213,8 @@ export default {
     async fetchListCategory() {
       await this.$store.dispatch('categories/fetchList')
     },
-    fetchListProduct() {
-      this.$store.dispatch('products/fetchList')
+    async fetchListProduct() {
+      await this.$store.dispatch('products/fetchList')
     },
   },
 }

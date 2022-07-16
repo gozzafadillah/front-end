@@ -7,10 +7,6 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
-  generate: {
-    fallback: true,
-  },
-
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s' - 'Bayeue',
@@ -31,7 +27,7 @@ export default {
   plugins: [
     // '~/plugins/vuex-persist',
     '~/plugins/persistedState.client.js',
-    // '~/plugins/api',
+    // '~/plugins/axios.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -51,7 +47,6 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    '@nuxtjs/proxy',
     '@nuxtjs/toast',
   ],
 
@@ -59,37 +54,9 @@ export default {
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: 'https://bayeue.thisham.my.id/api/',
-    proxy: true,
   },
 
-  proxy: {
-    '/api/': {
-      target: 'https://bayeue.thisham.my.id/api/',
-      pathRewrite: { '^/api/': '' },
-    },
-  },
-
-  devServer: {
-    proxy: {
-      '/api/': {
-        target: 'https://bayeue.thisham.my.id/api/',
-        pathRewrite: { '^/api/': '' },
-      },
-    },
-  },
-
-  toast: {
-    register: [
-      // Register custom toasts
-      {
-        name: 'my-error',
-        message: 'Oops...Something went wrong',
-        options: {
-          type: 'error',
-        },
-      },
-    ],
-  },
+  toast: {},
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
@@ -116,6 +83,11 @@ export default {
           error: colors.deepOrange.accent4,
           success: colors.green.accent3,
         },
+      },
+    },
+    defaultAssets: {
+      font: {
+        family: 'Inter',
       },
     },
   },

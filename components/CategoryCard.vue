@@ -6,9 +6,7 @@
   >
     <v-row wrap dense>
       <v-col align="center" align-self="center">
-        <v-icon x-large :color="colorIcon">
-          {{ categoryIcon }}
-        </v-icon>
+        <v-img :src="categorySrc" aspect-ratio="5" contain> </v-img>
         <v-card-text>
           {{ categoryName }}
         </v-card-text>
@@ -21,7 +19,7 @@ export default {
   name: 'CategoryCard',
   inheritAttrs: false,
   props: {
-    categoryIcon: {
+    categorySrc: {
       type: String,
       default: 'mdi-folder',
     },

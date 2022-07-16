@@ -13,6 +13,9 @@ export default {
     id() {
       return this.$route.params.id
     },
+    detailCategory() {
+      return this.$store.getters.detailCategory
+    },
   },
 }
 </script>

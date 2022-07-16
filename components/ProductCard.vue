@@ -6,7 +6,7 @@
   >
     <v-row wrap dense>
       <v-col align="center" justify="center">
-        <v-img :src="productSrc" aspect-ratio="1" contain> </v-img>
+        <v-img :src="productSrc" aspect-ratio="2" contain> </v-img>
       </v-col>
     </v-row>
   </v-card>

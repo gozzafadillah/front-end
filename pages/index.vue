@@ -1,26 +1,24 @@
 <template>
-  <v-app>
+  <v-container>
     <div class="container">
       <v-row>
         <v-col cols="7">
           <v-card height="467">
             <v-card-title> Sales </v-card-title>
 
-            <v-card-content>
-              <v-sparkline
-                :value="value"
-                :gradient="gradient"
-                :smooth="radius || false"
-                :padding="padding"
-                :line-width="width"
-                :stroke-linecap="lineCap"
-                :gradient-direction="gradientDirection"
-                :fill="fill"
-                :type="type"
-                :auto-line-width="autoLineWidth"
-                auto-draw
-              ></v-sparkline>
-            </v-card-content>
+            <v-sparkline
+              :value="value"
+              :gradient="gradient"
+              :smooth="radius || false"
+              :padding="padding"
+              :line-width="width"
+              :stroke-linecap="lineCap"
+              :gradient-direction="gradientDirection"
+              :fill="fill"
+              :type="type"
+              :auto-line-width="autoLineWidth"
+              auto-draw
+            ></v-sparkline>
           </v-card>
         </v-col>
         <v-col cols="5">
@@ -137,7 +135,7 @@
         </v-col>
       </v-row>
     </div>
-  </v-app>
+  </v-container>
 </template>
 
 <script>
@@ -196,9 +194,9 @@ export default {
 </script>
 
 <style scoped>
-.container {
+/* .container {
   background-color: #fff;
-}
+} */
 .completed {
   background-color: #def7ec;
   padding: 4px;

@@ -19,7 +19,14 @@ export const mutations = {
 export const actions = {
   async fetchList(store) {
     try {
-      const response = await this.$axios.$get('admin/users')
+      const config = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json',
+        },
+      }
+
+      const response = await this.$axios.$get('admin/transactions', config)
       // console.log(`Message: ${response.message}`)
       // console.log(response.rescode)
       store.commit('setList', response.result)

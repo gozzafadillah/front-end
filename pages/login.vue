@@ -9,7 +9,12 @@
       class="text-center mx-auto my-auto"
     >
       <NuxtLink to="/">
-        <v-img src="bayeue.png" contain aspect-ratio="4" alt=""></v-img>
+        <v-img
+          :src="require(`~/static/assets/img/${logo}`)"
+          contain
+          aspect-ratio="4"
+          alt=""
+        ></v-img>
       </NuxtLink>
     </v-col>
     <v-col cols="12" md="7" lg="7" xl="8" class="form-daftar px-10">
@@ -59,6 +64,7 @@ export default {
   layout: 'blank',
   data() {
     return {
+      logo: 'bayeue.png',
       showPassword: false,
       email: '',
       password: '',
@@ -68,8 +74,8 @@ export default {
     this.$store.getters['auth/isAuthenticated'] && this.$router.push('/')
   },
   methods: {
-    handleSubmit() {
-      this.$store.dispatch('auth/fetchLogin', {
+    async handleSubmit() {
+      await this.$store.dispatch('auth/fetchLogin', {
         email: this.email,
         password: this.password,
       })
