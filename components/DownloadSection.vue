@@ -25,8 +25,8 @@
                 max-width="360"
                 container
               ></v-img>
-            </v-col> </v-row
-          >``
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
     </v-container>
