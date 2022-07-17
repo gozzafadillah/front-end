@@ -16,7 +16,7 @@
       <v-row justify="center">
         <v-col cols="10" md="6">
           <h2 class="heading__login mb-10 text-center">Login</h2>
-          <form @submit.prevent="handleSubmit">
+          <form>
             <div class="title__login mb-2">Email</div>
             <v-text-field
               v-model="email"
@@ -34,7 +34,14 @@
               :type="showPassword ? 'text' : 'password'"
               @click:append="showPassword = !showPassword"
             ></v-text-field>
-            <v-btn block type="submit" name="submit" color="#528bcc" dark large>
+            <v-btn
+              block
+              name="submit"
+              color="#528bcc"
+              dark
+              large
+              @click="handleSubmit"
+            >
               Login
             </v-btn>
           </form>
