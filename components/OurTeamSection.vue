@@ -1,65 +1,144 @@
 <template>
-  <v-container id="about" class="about" fluid>
-    <v-row align="center" justify="center" class="pa-6" fill-height>
-      <v-col cols="8">
-        <v-row align="center" justify="space-around">
-          <v-col cols="12" class="text-center">
-            <h2 class="text-h3 font-weight-bold">Our Team</h2>
-            <p>
-              Along with people who are professionals in their fields, we
-              guarantee the convenience and security of your transactions
-            </p>
-          </v-col>
-          <v-col cols="12" align="center">
-            <v-row align="center" justify="center">
-              <v-col cols="6" md="4" class="text-center">
-                <v-card>
-                  <v-card-title>
-                    <span class="font-weigth-bold text-center">
-                      VueJS Front End Enginner
-                    </span>
-                  </v-card-title>
+  <section id="ourteam">
+    <v-container id="ourteam" class="ourteam" fluid>
+      <v-row align="center" justify="center" fill-height class="pa-md-16">
+        <v-col cols="12" md="8">
+          <v-row align="center" justify="space-around">
+            <v-col cols="12" class="text-center">
+              <h2 class="text-h3 font-weight-bold">Our Team</h2>
+              <p>
+                Along with people who are professionals in their fields, we
+                guarantee the convenience and security of your transactions
+              </p>
+            </v-col>
+            <v-col cols="12" align="center">
+              <v-row align="center" justify="center">
+                <v-col
+                  v-for="(team, i) in teams"
+                  :key="i"
+                  cols="12"
+                  md="4"
+                  class="text-center"
+                >
+                  <v-card flat>
+                    <div class="text-h6 font-weight-bold mb-4">
+                      {{ team.role }}
+                    </div>
 
-                  <v-list>
-                    <v-list-item class="grow">
-                      <v-list-item-avatar color="grey darken-3">
+                    <v-row align="center" justify="center" align-self="center">
+                      <v-col cols="6" align="center">
                         <v-img
-                          class="elevation-6"
                           alt=""
-                          src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                          :src="team.people[0].avatar"
+                          max-width="100"
                         ></v-img>
-                      </v-list-item-avatar>
-
-                      <v-list-item-content>
-                        <v-list-item-title>Evan You</v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                  </v-list>
-                </v-card>
-              </v-col>
-              <v-col cols="6" md="8">
-                <v-card>1</v-card>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="4">
-                <v-card>2</v-card>
-              </v-col>
-              <v-col cols="4">
-                <v-card>2</v-card>
-              </v-col>
-              <v-col cols="4">
-                <v-card>2</v-card>
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
-  </v-container>
+                        {{ team.people[0].name }}
+                      </v-col>
+                      <v-col cols="6" align="center">
+                        <v-img
+                          alt=""
+                          :src="team.people[1].avatar"
+                          max-width="100"
+                        ></v-img>
+                        {{ team.people[1].name }}
+                      </v-col>
+                    </v-row>
+                  </v-card>
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
+  </section>
 </template>
 <script>
 export default {
   name: 'OurTeamComponent',
+  data() {
+    return {
+      teams: [
+        {
+          role: 'VueJS Front End Engineer',
+          people: [
+            {
+              name: 'Nanda Hady Mulya',
+              avatar: require('static/assets/avatar/nanda.svg'),
+            },
+            {
+              name: 'Gisela Ramadinawati',
+              avatar: require('static/assets/avatar/gisel.svg'),
+            },
+          ],
+        },
+        {
+          role: 'Golang Back End Engineer',
+          people: [
+            {
+              name: 'M. Fadhillah Abdul A.',
+              avatar: require('static/assets/avatar/fadhil.svg'),
+            },
+            {
+              name: 'Indah Lestari',
+              avatar: require('static/assets/avatar/indah.svg'),
+            },
+          ],
+        },
+        {
+          role: 'Golang Back End Engineer',
+          people: [
+            {
+              name: 'Abel Melido Bangun',
+              avatar: require('static/assets/avatar/abel.svg'),
+            },
+            {
+              name: 'Luqman Wiranto',
+              avatar: require('static/assets/avatar/luqman.svg'),
+            },
+          ],
+        },
+        {
+          role: 'UI/UX Designer',
+          people: [
+            {
+              name: 'Ghilman Faza',
+              avatar: require('static/assets/avatar/ghilman.svg'),
+            },
+            {
+              name: 'Ardi Sugondo',
+              avatar: require('static/assets/avatar/ardi.svg'),
+            },
+          ],
+        },
+        {
+          role: 'Quality Engineer',
+          people: [
+            {
+              name: 'M. Fatkhul Allam',
+              avatar: require('static/assets/avatar/alam.svg'),
+            },
+            {
+              name: 'Sri Wulandari',
+              avatar: require('static/assets/avatar/wulan.svg'),
+            },
+          ],
+        },
+        {
+          role: 'Mobile Flutter',
+          people: [
+            {
+              name: 'Reza Syahputra S.',
+              avatar: require('static/assets/avatar/reza.svg'),
+            },
+            {
+              name: 'M. Fajar Al Fath',
+              avatar: require('static/assets/avatar/alfath.svg'),
+            },
+          ],
+        },
+      ],
+    }
+  },
 }
 </script>

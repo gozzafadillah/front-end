@@ -1,14 +1,16 @@
 <template>
   <div>
-    <v-navigation-drawer v-model="drawer" app temporary dark>
+    <v-navigation-drawer v-model="drawer" app temporary>
       <v-list>
         <v-list-item>
           <v-list-item-avatar>
-            <!-- <img src="@/assets/img/logo.png" alt="Logo" /> -->
+            <v-img
+              :src="require('static/assets/bayeue.svg')"
+              alt="Logo"
+            ></v-img>
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title class="title">Calango</v-list-item-title>
-            <v-list-item-subtitle>WEB</v-list-item-subtitle>
+            <v-list-item-title class="title">Bayeue</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>

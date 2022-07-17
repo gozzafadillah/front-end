@@ -1,13 +1,17 @@
 <template>
-  <div>
-    <v-footer padless class="footer px-16 py-16">
-      <v-row>
-        <v-col cols="5" class="my-auto">
-          <img src="@/assets/img/logo-putih.png" alt="" />
+  <section id="footer">
+    <v-container fluid class="footer">
+      <v-row align="center" class="pa-md-10">
+        <v-col cols="12" md="6" align="center">
+          <v-img
+            :src="require('static/assets/bayeue_white.svg')"
+            alt=""
+            max-width="300"
+          ></v-img>
         </v-col>
-        <v-col cols="7">
+        <v-col cols="12" md="6">
           <v-row>
-            <v-col>
+            <v-col cols="12" md="4">
               <div class="body-bold white--text">Services</div>
               <div class="item mt-6">
                 <v-btn dark text class="px-0" height="0"> Product </v-btn>
@@ -19,7 +23,7 @@
                 <v-btn dark text class="px-0" height="0"> Branding </v-btn>
               </div>
             </v-col>
-            <v-col>
+            <v-col cols="12" md="4">
               <div class="body-bold white--text">Legal</div>
               <div class="item mt-6">
                 <v-btn dark text class="px-0" height="0">
@@ -35,7 +39,7 @@
                 </v-btn>
               </div>
             </v-col>
-            <v-col>
+            <v-col cols="12" md="4">
               <div class="body-bold white--text">Get News and Update</div>
               <div class="item mt-6">
                 <v-btn dark text class="px-0" height="0">
@@ -56,11 +60,25 @@
           </v-row>
         </v-col>
       </v-row>
-    </v-footer>
-  </div>
+      <v-row>
+        <v-col cols="12" class="text-center reserved">
+          Copyright &copy; 2022. All right reserved - Bayeue Team.
+        </v-col>
+      </v-row>
+    </v-container>
+  </section>
 </template>
 <script>
 export default {
   name: 'FooterComponent',
 }
 </script>
+<style lang="scss" scoped>
+.footer {
+  background-color: #3aa2dc;
+  color: #fff;
+}
+.reserved {
+  background-color: #aad2e9;
+}
+</style>

@@ -2,31 +2,27 @@
   <section id="hero">
     <v-parallax
       :src="require('static/assets/paralax.svg')"
-      height="900"
+      height="800"
       class="mt-16"
     >
       <v-row align="center" justify="center" class="text--primary">
-        <v-col cols="12" md="6">
-          <v-row justify="center">
-            <v-col cols="6">
-              <v-img
-                :src="require('static/assets/iphone.svg')"
-                max-width="700"
-                container
-              ></v-img>
-            </v-col>
-          </v-row>
+        <v-col cols="12" md="6" align="center">
+          <v-img
+            :src="require('static/assets/iphone.svg')"
+            class="home__hero"
+            container
+          ></v-img>
         </v-col>
         <v-col cols="12" md="6">
-          <h2 class="text-h2 font-weight-bold mb-4">
+          <h2 class="home__title font-weight-bold mb-4">
             Provide <span class="color__bayeue">Convenience</span> <br />
             in Transactions
           </h2>
-          <h6 class="text-h6 font-weight-regular mb-4">
+          <h6 class="home__subtitle font-weight-regular mb-4">
             The ease of transacting can be felt by everyone <br />
             and tracking every transaction that occurs
           </h6>
-          <div>
+          <div class="d-flex">
             <v-btn large dark class="mr-2">
               <v-icon class="mr-2">mdi-google-play</v-icon>Google Play
             </v-btn>
@@ -99,6 +95,24 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.home__hero {
+  max-width: 50%;
+  @media screen and (max-width: 600px) {
+    max-width: 60%;
+  }
+}
+.home__title {
+  font-size: 3rem;
+  @media screen and (max-width: 600px) {
+    font-size: 2rem;
+  }
+}
+.home__subtitle {
+  font-size: 1.4rem;
+  @media screen and (max-width: 600px) {
+    font-size: 1rem;
+  }
+}
 .color__bayeue {
   color: $bayeue-primary;
 }
