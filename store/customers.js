@@ -17,15 +17,14 @@ export const mutations = {
 
 // Actions
 export const actions = {
-  fetchList(store) {
-    this.$axios
-      .get('/api/admin/users')
-      .then((response) => {
-        console.log(`Message : ${response.data.message}`)
-        store.commit('setList', response.data.result)
-      })
-      .catch((error) => {
-        console.log('Error: ', error)
-      })
+  async fetchList(store) {
+    try {
+      const response = await this.$axios.$get('admin/users')
+      // console.log(`Message: ${response.message}`)
+      // console.log(response.rescode)
+      store.commit('setList', response.result)
+    } catch (error) {
+      console.log('Error: ', error)
+    }
   },
 }

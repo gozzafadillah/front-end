@@ -90,7 +90,7 @@ export const state = () => ({
       status: 'Cancelled',
     },
     {
-      name: 'Payment from Fadil',
+      name: 'Payment from Fadhil',
       date: 'Apr 15, 2021',
       amount: 5000,
       status: 'In progress',
@@ -101,8 +101,21 @@ export const state = () => ({
       amount: 2300,
       status: 'In progress',
     },
+    {
+      name: 'Payment from Alam',
+      date: 'Apr 15, 2021',
+      amount: 2300,
+      status: 'In progress',
+    },
   ],
 })
+
+// Getters
+export const getters = {
+  isDataTopProduct: (state) => state.dataTopProduct,
+  isDataTopUser: (state) => state.dataTopUser,
+  isDataTransactions: (state) => state.dataTransactions,
+}
 
 // Mutations
 export const mutations = {
@@ -110,10 +123,10 @@ export const mutations = {
     state.dataTopProduct = param
   },
   setDataTopUser(state, param) {
-    state.dataTopProduct = param
+    state.dataTopUser = param
   },
   setDataTransactions(state, param) {
-    state.dataTopProduct = param
+    state.dataTransactions = param
   },
 }
 

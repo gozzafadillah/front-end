@@ -1,13 +1,17 @@
 // State
 export const state = () => ({
   list: [],
-  listByCategory: {},
+  listByCategory: [],
+  listDetailById: [],
+  listDetailBySlug: [],
 })
 
 // Getters
 export const getters = {
   list: (state) => state.list,
   listByCategory: (state) => state.listByCategory,
+  listDetailById: (state) => state.listDetailById,
+  listDetailBySlug: (state) => state.listDetailBySlug,
 }
 
 // Mutations
@@ -18,33 +22,41 @@ export const mutations = {
   setListByCategory(state, param) {
     state.listByCategory = param
   },
+  setListDetailById(state, param) {
+    state.listDetailById = param
+  },
+  setListDetailBySlug(state, param) {
+    state.listDetailBySlug = param
+  },
 }
 
 // Actions
 export const actions = {
-  fetchList(store) {
-    this.$axios
-      .get('/api/products')
-      .then((response) => {
-        console.log(`Message : ${response.data.message}`)
-
-        store.commit('setList', response.data.result)
-      })
-      .catch((error) => {
-        console.log('Error: ', error)
-      })
+  async fetchList(store) {
+    try {
+      const response = await this.$axios.get('products')
+      store.commit('setList', response.data.result)
+    } catch (error) {
+      console.log('Error: ', error)
+    }
   },
-  fetchListByCategory(store, _categoryId) {
-    // console.log(_categoryId)
-    this.$axios
-      .get(`/api/products/category/${_categoryId}`)
-      .then((response) => {
-        console.log(`Message : ${response.data.message}`)
+  async fetchListByCategory(store, _categoryId) {
+    try {
+      const response = await this.$axios.get(`products/category/${_categoryId}`)
+      store.commit('setListByCategory', response.data.result.products)
+    } catch (error) {
+      console.log('error: ', error)
+    }
+  },
 
-        store.commit('setListByCategory', response.data.result.products)
-      })
-      .catch((error) => {
-        console.log('error: ', error)
-      })
+  async fetchListDetailBySlug(store, _slug) {
+    try {
+      // hit api to get detail product by slug
+      const response = await this.$axios.get(`detail/${_slug}`)
+      this.$toast.success(`${response.data.message}!`)
+      store.commit('setListDetailBySlug', response.data.result.detail)
+    } catch (error) {
+      console.log('Error: ', error)
+    }
   },
 }

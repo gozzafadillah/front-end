@@ -15,13 +15,14 @@
         <DashboardCard
           title="Transactions"
           icon="mdi-swap-horizontal"
-          :count="10"
+          :count="countTransactions"
         />
       </v-col>
       <v-col cols="12" xs="6" sm="6" md="3">
         <DashboardCard
           dark
           :color-icon="'#fff'"
+          :color-title="'#fff'"
           title="Products"
           icon="mdi-cube"
           :count="countProducts"
@@ -29,12 +30,12 @@
       </v-col>
     </v-row>
 
-    <v-row dense wrap>
+    <v-row dense wrap class="mt-16">
       <v-col>
-        <v-card-title class="headline font-weight-bold"
+        <v-card-title class="text-h4 font-weight-bold"
           >Manage Product</v-card-title
         >
-        <v-card-subtitle class="title font-font-weight-bold"
+        <v-card-subtitle class="text-h5 font-weight-bold"
           >Categories</v-card-subtitle
         >
       </v-col>
@@ -53,7 +54,7 @@
         xl="2"
       >
         <CategoryCard
-          :category-icon="category.icon"
+          :category-src="category.Image"
           :category-name="category.Name"
           @click="showProductCard(category.ID)"
         />
@@ -73,9 +74,7 @@
 
     <v-row dense wrap>
       <v-col class="d-flex child-flex">
-        <v-card
-          :class="[dark ? 'dark' : 'light', 'align-center', 'flat', 'card']"
-        >
+        <v-card :class="['light', 'align-center', 'flat', 'card']">
           <v-card-title class="title">
             {{ categoryById.Name }}
           </v-card-title>
@@ -83,7 +82,7 @@
           <v-row dense wrap>
             <v-col
               v-for="(product, index) in productsByCategory"
-              :key="(product.slug, index)"
+              :key="(product.ID, index)"
               cols="4"
               xs="4"
               sm="3"
@@ -92,11 +91,10 @@
               xl="1"
             >
               <ProductCard
-                v-if="productsByCategory.length > 0"
                 :product-src="product.Image"
-                @click="productDetail"
+                @click="productDetailBySlug(product.Product_Slug)"
               />
-              {{ productsByCategory.length }}
+              <!-- {{ productsByCategory }} -->
             </v-col>
             <v-col
               cols="4"
@@ -113,11 +111,14 @@
 
           <v-row dense wrap class="text-right">
             <v-col>
+              <v-btn color="grey" dark @click="updateCategory">
+                <v-icon>mdi-eye-circle</v-icon>
+              </v-btn>
               <v-btn color="blue" dark @click="detailCategory">
-                <v-icon> mdi-eye-circle-outline </v-icon>
+                <v-icon>mdi-eye-circle-outline</v-icon>
               </v-btn>
               <v-btn color="red" dark @click.stop="showProduct = !showProduct">
-                <v-icon> mdi-close </v-icon>
+                <v-icon>mdi-close</v-icon>
               </v-btn>
             </v-col>
           </v-row>
@@ -138,15 +139,22 @@ export default {
     ProductCard,
     ButtonCard,
   },
-  middleware: ['auth'],
   data() {
     return {
       showProduct: true,
     }
   },
+  head() {
+    return {
+      title: 'Products Page',
+    }
+  },
   computed: {
     countCustomers() {
       return this.$store.getters['customers/list'].length
+    },
+    countTransactions() {
+      return this.$store.getters['transactions/list'].length
     },
     countProducts() {
       return this.$store.getters['products/list'].length
@@ -162,9 +170,10 @@ export default {
     },
   },
   mounted() {
-    this.fetchListCustomer()
+    this.fetchListCustomers()
+    this.fetchListTransactions()
+    this.fetchListProducts()
     this.fetchListCategory()
-    this.fetchListProduct()
     // this.fetchListProductByCategory()
   },
   methods: {
@@ -172,49 +181,52 @@ export default {
     createCategory() {
       this.$router.push('/categories/create')
     },
-
     // redirect to create product
     newProduct() {
       this.$router.push('/products/create')
     },
-
+    // redirect to detail category
+    updateCategory() {
+      this.$router.push('/categories/' + this.categoryById.ID)
+    },
     // redirect to detail category
     detailCategory() {
       this.$router.push('/categories/' + this.categoryById.ID)
     },
-
-    // redirect to detail product
-    productDetail() {
-      this.$router.push('/products/detail')
+    // redirect to detail list product by id
+    productDetailById(id) {
+      this.$router.push(`/products/${id}`)
     },
-
+    // redirect to detail list product by slug
+    productDetailBySlug(slug) {
+      this.$router.push(`/products/detail/${slug}`)
+    },
     // redirect to action in store
     // show products by category
-    showProductCard(id) {
-      // show product card
-      // this.showProduct = !this.showProduct
-      // fetch category by id
-      this.$store.dispatch('categories/fetchListById', id)
-      // fetch list product by category
-      this.$store.dispatch('products/fetchListByCategory', id)
+    async showProductCard(id) {
+      try {
+        await this.$store.dispatch('categories/fetchListById', id)
+        await this.$store.dispatch('products/fetchListByCategory', id)
+      } catch (error) {
+        console.log('error: ', error)
+      }
     },
-    fetchListCustomer() {
-      this.$store.dispatch('customers/fetchList')
+    async fetchListCustomers() {
+      await this.$store.dispatch('customers/fetchList')
     },
-    fetchListCategory() {
-      this.$store.dispatch('categories/fetchList')
+    async fetchListTransactions() {
+      await this.$store.dispatch('transactions/fetchList')
     },
-    fetchListProduct() {
-      this.$store.dispatch('products/fetchList')
+    async fetchListProducts() {
+      await this.$store.dispatch('products/fetchList')
     },
-    // fetchListProductByCategory(categoryId) {
-    //   this.showProduct = !this.showProduct
-    //   this.$store.dispatch('products/fetchListByCategory', categoryId)
-    // },
+    async fetchListCategory() {
+      await this.$store.dispatch('categories/fetchList')
+    },
   },
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss" scope>
 .dark {
   background-color: $bayeue-primary !important;
   color: #fff;
