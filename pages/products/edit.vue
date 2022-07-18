@@ -1,5 +1,5 @@
 <template>
-  <div>Editing Product {{ $route.params.id }}</div>
+  <div>Editing Product {{ $route.params._slug }}</div>
 </template>
 <script>
 export default {

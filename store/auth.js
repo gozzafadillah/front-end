@@ -1,9 +1,10 @@
+// import Cookies from 'js-cookie'
 // State
 export const state = () => ({
   authenticated: false,
   token: null,
-  user: [],
-  landing: false,
+  user: {},
+  // token: Cookies.get('t') || null,
 })
 
 // Getters
@@ -17,13 +18,15 @@ export const getters = {
   isUser(state) {
     return state.user
   },
-  isLanding(state) {
-    return state.landing
-  },
 }
 
 // Mutations
 export const mutations = {
+  // setToken(state, payload) {
+  //   console.log(payload)
+  //   state.token = payload
+  //   Cookies.set('t', state.token)
+  // },
   setToken(state, param) {
     state.token = param
   },
@@ -33,83 +36,53 @@ export const mutations = {
   setUser(state, param) {
     state.user = param
   },
-  setLanding(state, param) {
-    state.landing = param
-  },
 }
 
 // Actions
 export const actions = {
-  async fetchLogin(store, param) {
-    // console.log(param)
+  async fetchLogin(store, payload) {
     try {
-      // hit api to get token
-      const response = await this.$axios.$post('/api/login', {
-        email: param.email,
-        password: param.password,
-      })
-      console.log(response.rescode)
-
-      if (response.rescode >= 200 || response.rescode < 400) {
-        store.commit('setAuthenticated', true)
-        store.commit('setToken', response.data.token)
-      }
-      localStorage.setItem('token', response.data.token)
-
-      // setup notification
-      const message = response.message
-      const notification = message.split(' ')
-
+      const response = await this.$axios.post('login', payload)
+      const notification = response.data.message.split(' ')
       for (let i = 0; i < notification.length; i++) {
         notification[i] =
           notification[i].charAt(0).toUpperCase() + notification[i].slice(1)
       }
       const notificationMessage = notification.join(' ')
-
-      // show notification
-      this.$toast.success(`${notificationMessage}!`, {
-        position: 'top-right',
-        duration: 3000,
-        fitToScreen: true,
-      })
-
+      // check rescode
+      if (response.data.rescode >= 200 || response.data.rescode < 400) {
+        store.commit('setToken', response.data.data.token)
+        localStorage.setItem('token', response.data.data.token)
+        localStorage.setItem('user', JSON.stringify(payload))
+        store.commit('setAuthenticated', true)
+        store.commit('setUser', payload)
+      }
+      // show notification success
+      this.$toast.success(`${notificationMessage}!`)
       // redirect to dashboard
       this.$router.push('/')
     } catch (error) {
-      console.log('Error: ', error)
-    }
-  },
-
-  async fetchUsers(store) {
-    try {
-      const response = await this.$axios.$get('admin/users')
-      console.log(response.rescode)
-
-      store.commit('setUser', response.result)
-    } catch (error) {
-      console.log('Error: ', error)
+      this.$toast.error(`Failed login!`)
     }
   },
 
   fetchLogout(store) {
     store.commit('setAuthenticated', false)
     store.commit('setToken', null)
-
     const notificationMessage = 'Logout Successfully, Good Bye!'
-
     // show notification
     this.$toast.success(`${notificationMessage}!`, {
       position: 'top-right',
       duration: 3000,
       fitToScreen: true,
     })
-
     // redirect to login
     this.$router.push('/login')
   },
 
-  checkLanding(store) {
-    // masih fasle?this
-    // user klik btn login / created login supaya render ke login dengan state true
+  checkAuthenticated(store) {
+    if (!this.$route.path === '/landing' && !this.$route.path === '/login') {
+      store.commit('setAuthenticated', true)
+    }
   },
 }

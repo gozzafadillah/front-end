@@ -1,12 +1,14 @@
 <template>
   <div>
-    <h1>Detail Category {{ id }}</h1>
-
-    <ol v-for="item in detailCategory" :key="(item.Id, index)">
-      {{
-        item.Name
-      }}
+    <h1>Update category {{ id }}</h1>
+    <ol v-for="(category, index) in listByID" :key="(category.ID, index)">
+      <li>{{ category.ID }}</li>
+      <li>{{ category.Name }}</li>
+      <li>{{ category.Image }}</li>
+      <li>{{ category.Status }}</li>
     </ol>
+
+    <div></div>
   </div>
 </template>
 <script>
@@ -19,16 +21,16 @@ export default {
     id() {
       return this.$route.params.id
     },
-    detailCategory() {
-      return this.$store.getters['categories/listById']
+    listByID() {
+      return this.$store.getters['categories/detailById']
     },
   },
   mounted() {
-    this.fetchDetailById()
+    this.fetchListById()
   },
   methods: {
-    fetchDetailById(id) {
-      this.$store.dispatch('categories/fetchById', (id = this.id))
+    fetchListById() {
+      this.$store.dispatch('categories/fetchListById', this.id)
     },
   },
 }

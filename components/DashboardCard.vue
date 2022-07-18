@@ -1,6 +1,6 @@
 <template>
   <v-card
-    :class="[dark ? 'dark' : 'light', 'flat', 'card']"
+    :class="[dark ? 'dark' : 'light', 'd-flex', 'align-center', 'flat', 'card']"
     v-bind="$attrs"
     v-on="$listeners"
   >
@@ -11,8 +11,18 @@
         </v-icon>
       </v-col>
       <v-col cols="9">
-        <v-card-title class="ma-0 pa-0"> {{ title }} </v-card-title>
-        <v-card-text class="text-h4 ma-0 pa-0 font-weight-bold">
+        <v-card-title :class="[dark ? 'dark' : 'light', 'ma-0', 'pa-0']">
+          {{ title }}
+        </v-card-title>
+        <v-card-text
+          :class="[
+            dark ? 'dark' : 'light',
+            'text-h4',
+            'ma-0',
+            'pa-0',
+            'font-weight-bold',
+          ]"
+        >
           {{ count }}
         </v-card-text>
       </v-col>
@@ -36,13 +46,14 @@ export default {
       type: Number,
       default: 0,
     },
-    dark: {
-      type: Boolean,
-      default: false,
-    },
     colorIcon: {
       type: String,
       default: '#0092E4',
+    },
+
+    dark: {
+      type: Boolean,
+      default: false,
     },
   },
 }
