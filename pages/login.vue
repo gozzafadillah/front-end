@@ -57,11 +57,15 @@ export default {
   layout: 'blank',
   data() {
     return {
-      // logo: 'bayeue.png',
       logo: 'bayeue_circle.svg',
       showPassword: false,
       email: '',
       password: '',
+    }
+  },
+  head() {
+    return {
+      title: 'Login Page',
     }
   },
   mounted() {

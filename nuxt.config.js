@@ -9,7 +9,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s' - 'Bayeue',
+    titleTemplate: '%s - Bayeue',
     title: 'Bayeue',
     meta: [
       { charset: 'utf-8' },
@@ -24,7 +24,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/persistedState.client.js', '~/plugins/axios.js'],
+  plugins: ['~/plugins/persistedState.client.js'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,

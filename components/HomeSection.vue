@@ -1,5 +1,5 @@
 <template>
-  <section id="hero">
+  <section id="home">
     <v-parallax
       :src="require('static/assets/paralax.svg')"
       height="800"

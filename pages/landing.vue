@@ -56,7 +56,11 @@ export default {
       color: '#3AA2DC',
     }
   },
-
+  head() {
+    return {
+      title: 'Landing Page',
+    }
+  },
   watch: {
     fab(value) {
       if (value) {

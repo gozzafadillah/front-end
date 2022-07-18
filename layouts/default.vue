@@ -103,7 +103,7 @@
 <script>
 export default {
   name: 'DefaultLayout',
-  // middleware: ['auth'],
+  middleware: ['auth'],
   data() {
     return {
       clipped: false,
@@ -123,7 +123,7 @@ export default {
           icon: 'mdi-cart-outline',
           title: 'Transactions',
         },
-        { link: 'users', icon: 'mdi-account-circle', title: 'Customers' },
+        { link: 'accounts', icon: 'mdi-account-circle', title: 'Accounts' },
       ],
     }
   },

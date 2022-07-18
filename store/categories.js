@@ -1,14 +1,15 @@
 // State
 export const state = () => ({
   list: [],
-  listById: {},
-  detail: {},
+  listById: [],
+  detailById: {},
 })
 
 // Getters
 export const getters = {
   list: (state) => state.list,
   listById: (state) => state.listById,
+  detailById: (state) => state.detailById,
 }
 
 // Mutations
@@ -19,27 +20,26 @@ export const mutations = {
   setListById(state, param) {
     state.listById = param
   },
+  setDetailById(state, param) {
+    state.detailById = param
+  },
 }
 
 // Actions
 export const actions = {
   async fetchList(store) {
     try {
-      const response = await this.$axios.$get('category')
-      // console.log(`Message: ${response.message}`)
-      // console.log(response.rescode)
-      store.commit('setList', response.result)
+      const response = await this.$axios.get('category')
+      store.commit('setList', response.data.result)
     } catch (error) {
       console.log('error: ', error)
     }
   },
   async fetchListById(store, _id) {
     try {
-      const response = await this.$axios.$get(`category/${_id}`)
-      // console.log(`Message: ${response.message}`)
-      console.log(response.rescode)
-      console.log(response.result)
-      store.commit('setListById', response.result)
+      const response = await this.$axios.get(`category/${_id}`)
+      store.commit('setListById', response.data.result)
+      store.commit('setDetailById', response.data.result)
     } catch (error) {
       console.log('error: ', error)
     }
@@ -48,15 +48,10 @@ export const actions = {
   async updateCategory(_id) {
     try {
       const config = {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
+        headers: {},
       }
-      const response = await this.$axios.$put(`admin/category/${_id}`, config)
-      // console.log(`Message: ${response.message}`)
-      console.log(response.rescode)
-      console.log(response.result)
+      const response = await this.$axios.put(`admin/category/${_id}`, config)
+      console.log('Response: ', response)
     } catch (error) {
       console.log('error: ', error)
     }

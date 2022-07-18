@@ -15,7 +15,7 @@
         <DashboardCard
           title="Transactions"
           icon="mdi-swap-horizontal"
-          :count="10"
+          :count="countTransactions"
         />
       </v-col>
       <v-col cols="12" xs="6" sm="6" md="3">
@@ -30,12 +30,12 @@
       </v-col>
     </v-row>
 
-    <v-row dense wrap>
+    <v-row dense wrap class="mt-16">
       <v-col>
-        <v-card-title class="headline font-weight-bold"
+        <v-card-title class="text-h4 font-weight-bold"
           >Manage Product</v-card-title
         >
-        <v-card-subtitle class="title font-font-weight-bold"
+        <v-card-subtitle class="text-h5 font-weight-bold"
           >Categories</v-card-subtitle
         >
       </v-col>
@@ -144,9 +144,17 @@ export default {
       showProduct: true,
     }
   },
+  head() {
+    return {
+      title: 'Products Page',
+    }
+  },
   computed: {
     countCustomers() {
       return this.$store.getters['customers/list'].length
+    },
+    countTransactions() {
+      return this.$store.getters['transactions/list'].length
     },
     countProducts() {
       return this.$store.getters['products/list'].length
@@ -162,9 +170,10 @@ export default {
     },
   },
   mounted() {
-    this.fetchListCustomer()
+    this.fetchListCustomers()
+    this.fetchListTransactions()
+    this.fetchListProducts()
     this.fetchListCategory()
-    this.fetchListProduct()
     // this.fetchListProductByCategory()
   },
   methods: {
@@ -172,22 +181,18 @@ export default {
     createCategory() {
       this.$router.push('/categories/create')
     },
-
     // redirect to create product
     newProduct() {
       this.$router.push('/products/create')
     },
-
     // redirect to detail category
     updateCategory() {
       this.$router.push('/categories/' + this.categoryById.ID)
     },
-
     // redirect to detail category
     detailCategory() {
       this.$router.push('/categories/' + this.categoryById.ID)
     },
-
     // redirect to detail list product by id
     productDetailById(id) {
       this.$router.push(`/products/${id}`)
@@ -196,7 +201,6 @@ export default {
     productDetailBySlug(slug) {
       this.$router.push(`/products/detail/${slug}`)
     },
-
     // redirect to action in store
     // show products by category
     async showProductCard(id) {
@@ -207,14 +211,17 @@ export default {
         console.log('error: ', error)
       }
     },
-    async fetchListCustomer() {
+    async fetchListCustomers() {
       await this.$store.dispatch('customers/fetchList')
+    },
+    async fetchListTransactions() {
+      await this.$store.dispatch('transactions/fetchList')
+    },
+    async fetchListProducts() {
+      await this.$store.dispatch('products/fetchList')
     },
     async fetchListCategory() {
       await this.$store.dispatch('categories/fetchList')
-    },
-    async fetchListProduct() {
-      await this.$store.dispatch('products/fetchList')
     },
   },
 }

@@ -90,13 +90,19 @@ export const state = () => ({
       status: 'Cancelled',
     },
     {
-      name: 'Payment from Fadil',
+      name: 'Payment from Fadhil',
       date: 'Apr 15, 2021',
       amount: 5000,
       status: 'In progress',
     },
     {
       name: 'Payment from Ghilman',
+      date: 'Apr 15, 2021',
+      amount: 2300,
+      status: 'In progress',
+    },
+    {
+      name: 'Payment from Alam',
       date: 'Apr 15, 2021',
       amount: 2300,
       status: 'In progress',

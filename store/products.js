@@ -34,47 +34,27 @@ export const mutations = {
 export const actions = {
   async fetchList(store) {
     try {
-      const response = await this.$axios.$get('products')
-      // console.log(`Message: ${response.message}`)
-      // console.log(response.rescode)
-      store.commit('setList', response.result)
+      const response = await this.$axios.get('products')
+      store.commit('setList', response.data.result)
     } catch (error) {
       console.log('Error: ', error)
     }
   },
   async fetchListByCategory(store, _categoryId) {
-    // console.log(_categoryId)
     try {
-      const response = await this.$axios.$get(
-        `products/category/${_categoryId}`
-      )
-      console.log(`Message: ${response.message}`)
-      console.log(response.rescode)
-      store.commit('setListByCategory', response.result.products)
+      const response = await this.$axios.get(`products/category/${_categoryId}`)
+      store.commit('setListByCategory', response.data.result.products)
     } catch (error) {
       console.log('error: ', error)
     }
   },
-  // async fetchListDetailById(store, _id) {
-  //   // console.log(id)
-  //   try {
-  //     // hit api to get detail product by id
-  //     const response = await this.$axios.$get(`products/${_id}`)
-  //     console.log(`Message: ${response.message}`)
-  //     console.log(response.rescode)
-  //     console.log(response.result)
-  //     store.commit('setListDetailById', response.result)
-  //   } catch (error) {
-  //     console.log('Error: ', error)
-  //   }
-  // },
+
   async fetchListDetailBySlug(store, _slug) {
-    // console.log(slug)
     try {
       // hit api to get detail product by slug
-      const response = await this.$axios.$get(`detail/${_slug}`)
-      console.log(`Message : ${response.message} for ${_slug}`)
-      store.commit('setListDetailBySlug', response.result.detail)
+      const response = await this.$axios.get(`detail/${_slug}`)
+      this.$toast.success(`${response.data.message}!`)
+      store.commit('setListDetailBySlug', response.data.result.detail)
     } catch (error) {
       console.log('Error: ', error)
     }

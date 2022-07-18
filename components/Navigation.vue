@@ -4,10 +4,13 @@
       <v-list>
         <v-list-item>
           <v-list-item-avatar>
-            <v-img
-              :src="require('static/assets/bayeue.svg')"
-              alt="Logo"
-            ></v-img>
+            <NuxtLink to="/landing">
+              <v-img
+                :src="require('static/assets/bayeue.svg')"
+                alt="Logo"
+                width="40"
+              ></v-img>
+            </NuxtLink>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title class="title">Bayeue</v-list-item-title>
@@ -15,22 +18,17 @@
         </v-list-item>
       </v-list>
 
-      <v-divider />
-
       <v-list dense>
         <v-list-item
-          v-for="([icon, text, link], i) in items"
+          v-for="([text, link], i) in items"
           :key="i"
           link
           @click="$vuetify.goTo(link)"
         >
-          <v-list-item-icon class="justify-center">
-            <v-icon>{{ icon }}</v-icon>
-          </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title class="subtitile-1">{{
-              text
-            }}</v-list-item-title>
+            <v-list-item-title class="subtitle-1">
+              {{ text }}
+            </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -45,7 +43,9 @@
       :class="{ expand: flat }"
     >
       <v-toolbar-title>
-        <v-img :src="require('static/assets/bayeue_white.svg')" />
+        <NuxtLink to="/landing">
+          <v-img :src="require('static/assets/bayeue_white.svg')" />
+        </NuxtLink>
       </v-toolbar-title>
       <v-spacer />
       <v-app-bar-nav-icon
@@ -95,11 +95,12 @@ export default {
     drawer: null,
     isXs: false,
     items: [
-      ['mdi-home-outline', 'Home', '#hero'],
-      ['mdi-information-outline', 'Feature', '#features'],
-      ['mdi-download-box-outline', 'About', '#about'],
-      ['mdi-currency-usd', 'Our Team', '#pricing'],
-      ['mdi-email-outline', 'FaQ', '#contact'],
+      ['Home', '#home'],
+      ['Features', '#features'],
+      ['About', '#about'],
+      ['Our Team', '#ourteam'],
+      ["FAQ's", '#faq'],
+      ['Download', '#download'],
     ],
   }),
   watch: {
