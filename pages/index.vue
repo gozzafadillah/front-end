@@ -180,13 +180,13 @@ export default {
       return this.$store.getters['dashboard/isDataTransactions']
     },
     countCustomers() {
-      return this.$store.getters['customers/list'].length
+      return this.$store.getters['customers/countList']
     },
     countTransactions() {
-      return this.$store.getters['transactions/list'].length
+      return this.$store.getters['transactions/countList']
     },
     countProducts() {
-      return this.$store.getters['products/list'].length
+      return this.$store.getters['products/countList']
     },
   },
   mounted() {

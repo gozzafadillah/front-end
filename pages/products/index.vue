@@ -32,12 +32,8 @@
 
     <v-row dense wrap class="mt-16">
       <v-col>
-        <v-card-title class="text-h4 font-weight-bold"
-          >Manage Product</v-card-title
-        >
-        <v-card-subtitle class="text-h5 font-weight-bold"
-          >Categories</v-card-subtitle
-        >
+        <h4 class="text-h4 font-weight-bold mb-4">Manage Product</h4>
+        <h5 class="text-h5 font-weight-bold">Categories</h5>
       </v-col>
     </v-row>
 
@@ -56,7 +52,7 @@
         <CategoryCard
           :category-src="category.Image"
           :category-name="category.Name"
-          @click="showProductCard(category.ID)"
+          @click="showProductCard(category.ID, category.Name)"
         />
       </v-col>
       <v-col
@@ -75,50 +71,63 @@
     <v-row dense wrap>
       <v-col class="d-flex child-flex">
         <v-card :class="['light', 'align-center', 'flat', 'card']">
-          <v-card-title class="title">
-            {{ categoryById.Name }}
-          </v-card-title>
-
+          <h6 class="text-h6 mb-4">
+            {{ categoryNameById }}
+          </h6>
           <v-row dense wrap>
-            <v-col
-              v-for="(product, index) in productsByCategory"
-              :key="(product.ID, index)"
-              cols="4"
-              xs="4"
-              sm="3"
-              md="2"
-              lg="1"
-              xl="1"
-            >
-              <ProductCard
-                :product-src="product.Image"
-                @click="productDetailBySlug(product.Product_Slug)"
-              />
-              <!-- {{ productsByCategory }} -->
-            </v-col>
-            <v-col
-              cols="4"
-              xs="4"
-              sm="3"
-              md="2"
-              lg="1"
-              xl="1"
-              class="d-flex child-flex"
-            >
-              <ButtonCard dark @click="newProduct" />
-            </v-col>
+            <v-container>
+              <v-row v-if="productsByCategoryLength > 0">
+                <v-col
+                  v-for="(product, index) in productsByCategory"
+                  :key="(product.ID, index)"
+                  cols="4"
+                  xs="4"
+                  sm="3"
+                  md="2"
+                  lg="1"
+                  xl="1"
+                >
+                  <ProductCard
+                    :product-src="product.Image"
+                    @click="productDetailBySlug(product.Product_Slug)"
+                  />
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col
+                  cols="4"
+                  xs="4"
+                  sm="3"
+                  md="2"
+                  lg="1"
+                  xl="1"
+                  class="d-flex child-flex"
+                >
+                  <ButtonCard dark @click="newProduct" />
+                </v-col>
+              </v-row>
+            </v-container>
           </v-row>
 
           <v-row dense wrap class="text-right">
             <v-col>
-              <v-btn color="grey" dark @click="updateCategory">
-                <v-icon>mdi-eye-circle</v-icon>
+              <v-btn
+                class="text-capitalize"
+                color="blue"
+                dark
+                @click="detailCategory"
+              >
+                <v-icon class="mr-2">mdi-eye-circle-outline</v-icon>
+                Detail
               </v-btn>
-              <v-btn color="blue" dark @click="detailCategory">
-                <v-icon>mdi-eye-circle-outline</v-icon>
-              </v-btn>
-              <v-btn color="red" dark @click.stop="showProduct = !showProduct">
-                <v-icon>mdi-close</v-icon>
+              <v-btn
+                class="text-capitalize"
+                color="red"
+                dark
+                @click="deteleCategory(categoryId)"
+              >
+                <v-icon class="mr-2">mdi-close</v-icon>
+                Delete
               </v-btn>
             </v-col>
           </v-row>
@@ -139,11 +148,6 @@ export default {
     ProductCard,
     ButtonCard,
   },
-  data() {
-    return {
-      showProduct: true,
-    }
-  },
   head() {
     return {
       title: 'Products Page',
@@ -151,58 +155,62 @@ export default {
   },
   computed: {
     countCustomers() {
-      return this.$store.getters['customers/list'].length
+      return this.$store.getters['customers/countList']
     },
     countTransactions() {
-      return this.$store.getters['transactions/list'].length
+      return this.$store.getters['transactions/countList']
     },
     countProducts() {
-      return this.$store.getters['products/list'].length
+      return this.$store.getters['products/countList']
     },
     categories() {
       return this.$store.getters['categories/list']
     },
     categoryById() {
-      return this.$store.getters['categories/listById']
+      return this.$store.getters['categories/detailById']
+    },
+    categoryNameById() {
+      return this.$store.getters['categories/detailById'].Name
+    },
+    productsByCategoryLength() {
+      return this.$store.getters['products/lengthListByCategory']
     },
     productsByCategory() {
       return this.$store.getters['products/listByCategory']
     },
   },
   mounted() {
+    this.fetchListCategory()
+    this.fetchListProducts()
     this.fetchListCustomers()
     this.fetchListTransactions()
-    this.fetchListProducts()
-    this.fetchListCategory()
-    // this.fetchListProductByCategory()
   },
   methods: {
-    // redirect to create category
+    categoryCardClicked() {},
+    // categories
     createCategory() {
       this.$router.push('/categories/create')
     },
-    // redirect to create product
-    newProduct() {
-      this.$router.push('/products/create')
-    },
-    // redirect to detail category
-    updateCategory() {
-      this.$router.push('/categories/' + this.categoryById.ID)
-    },
-    // redirect to detail category
     detailCategory() {
       this.$router.push('/categories/' + this.categoryById.ID)
     },
-    // redirect to detail list product by id
+    updateCategory() {
+      this.$router.push('/categories/' + this.categoryById.ID)
+    },
+    async fetchListCategory() {
+      await this.$store.dispatch('categories/fetchList')
+    },
+
+    // products
+    newProduct() {
+      this.$router.push('/products/create')
+    },
     productDetailById(id) {
       this.$router.push(`/products/${id}`)
     },
-    // redirect to detail list product by slug
     productDetailBySlug(slug) {
       this.$router.push(`/products/detail/${slug}`)
     },
-    // redirect to action in store
-    // show products by category
     async showProductCard(id) {
       try {
         await this.$store.dispatch('categories/fetchListById', id)
@@ -211,17 +219,18 @@ export default {
         console.log('error: ', error)
       }
     },
-    async fetchListCustomers() {
-      await this.$store.dispatch('customers/fetchList')
-    },
-    async fetchListTransactions() {
-      await this.$store.dispatch('transactions/fetchList')
-    },
     async fetchListProducts() {
       await this.$store.dispatch('products/fetchList')
     },
-    async fetchListCategory() {
-      await this.$store.dispatch('categories/fetchList')
+
+    // customers
+    async fetchListCustomers() {
+      await this.$store.dispatch('customers/fetchList')
+    },
+
+    // transactions
+    async fetchListTransactions() {
+      await this.$store.dispatch('transactions/fetchList')
     },
   },
 }
