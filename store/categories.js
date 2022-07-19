@@ -7,6 +7,7 @@ export const getters = {
   list: (state) => state.list,
   countList: (state) => state.list.length,
   detailById: (state) => state.detailById,
+  statusById: (state) => state.detailById.Status,
 }
 
 export const mutations = {
@@ -37,13 +38,13 @@ export const actions = {
   },
   async getDetailCategory(_id) {
     try {
-      const data = await this.$store.getters.detail(_id)
-      this.$store.commit('setDetailById', data)
+      const response = await this.$store.getters.detail(_id)
+      console.log(response.data.message)
     } catch (error) {
       console.log('error: ', error)
     }
   },
-  async delete(param) {
+  async delete(id) {
     // console.log(id)
     try {
       const config = {
@@ -51,9 +52,7 @@ export const actions = {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       }
-      await this.$axios.delete('admin/category/delete/', config, {
-        param: this.ID,
-      })
+      await this.$axios.delete(`admin/category/delete/${id}`, config)
       this.$toast.success('Delete category successfully!')
     } catch (error) {
       console.log('error: ', error)
