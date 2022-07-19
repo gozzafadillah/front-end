@@ -120,15 +120,6 @@
                 <v-icon class="mr-2">mdi-eye-circle-outline</v-icon>
                 Detail
               </v-btn>
-              <!-- <v-btn
-                class="text-capitalize"
-                color="red"
-                dark
-                @click="deteleCategory(categoryId)"
-              >
-                <v-icon class="mr-2">mdi-close</v-icon>
-                Delete
-              </v-btn> -->
             </v-col>
           </v-row>
         </v-card>
