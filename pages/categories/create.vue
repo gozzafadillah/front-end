@@ -1,66 +1,50 @@
 <template>
-  <v-container class="blank-center pa-10">
-    <v-row class="d-flex flex-column">
-      <v-col cols="12">
-        <v-card-title class="font-weight-bold mb-8">
+  <v-container class="pa-4 pa-md-10">
+    <v-row>
+      <v-col cols="12" class="mb-10">
+        <div class="font-weight-bold">
           <v-btn icon to="/products" class="mr-4">
-            <v-icon color="primary"> mdi-arrow-left </v-icon>
+            <v-icon color="#3aa2dc">mdi-arrow-left</v-icon>
           </v-btn>
           Create New Category
-        </v-card-title>
+        </div>
       </v-col>
-
-      <v-col cols="12" md="6" justify="center">
-        <form @click.prevent="storeCategory">
-          <div class="font-weight-bold title mb-3">Category name</div>
+      <v-col cols="12" md="6">
+        <form>
+          <div class="font-weight-bold title">Name</div>
           <v-text-field
-            v-model="category.name"
+            v-model="name"
             placeholder="What is the name of this category?"
             required
             solo
+            flat
+          ></v-text-field>
+
+          <div class="font-weight-bold title">Upload Image</div>
+          <div class="mb-6">
+            <input
+              id="file"
+              type="file"
+              name="file"
+              class="upload__file mb-4"
+              @change="onFileSelected"
+            />
+          </div>
+          <!-- <input
+            class="upload__file mb-4"
+            type="file"
+            @change="onFileSelected"
+          /> -->
+
+          <v-btn
+            class="text-capitalize font-weight-bold px-10"
+            color="#3aa2dc"
+            dark
+            large
+            @click="storeCategory"
           >
-          </v-text-field>
-
-          <div class="font-weight-bold title mb-3">Category icon</div>
-          <v-text-field
-            v-model="category.icon"
-            placeholder="What is the name of this category?"
-            required
-            solo
-          >
-          </v-text-field>
-
-          <!-- <div class="font-weight-bold title my-3">Upload Image</div>
-        <v-file-input
-          v-model="category.imageUrl"
-          counter
-          placeholder="Upload an image"
-          required
-          solo
-        >
-        </v-file-input> -->
-
-          <!-- <v-card>
-            <v-card-actions v-model="categoryIcon">
-              <v-btn value="mdi-home-outline" icon>
-                <v-icon color="primary"> mdi-home-outline </v-icon>
-              </v-btn>
-              <v-btn icon>
-                <v-icon color="primary"> mdi-bell-outline </v-icon>
-              </v-btn>
-              <v-btn icon>
-                <v-icon color="primary"> mdi-timer-sand-empty </v-icon>
-              </v-btn>
-              <v-btn icon>
-                <v-icon color="primary"> mdi-hospital </v-icon>
-              </v-btn>
-              <v-btn icon>
-                <v-icon color="primary"> mdi-play-box-outline </v-icon>
-              </v-btn>
-            </v-card-actions>
-          </v-card> -->
-
-          <v-btn type="submit" color="primary" class="px-10 mt-10"> Add </v-btn>
+            Add
+          </v-btn>
         </form>
       </v-col>
     </v-row>
@@ -72,42 +56,38 @@ export default {
   name: 'CreateCategoryPage',
   data() {
     return {
-      category: {
-        name: '',
-        icon: '',
-        imageUrl: '',
-      },
+      name: '',
+      selectedFile: '',
     }
   },
-  computed: {
-    token() {
-      // return this.$store.getters['auth/isToken']
-      return this.localStorage.getItem('token')
-    },
+  head() {
+    return {
+      title: 'Create Category Page',
+    }
   },
   methods: {
+    onFileSelected(e) {
+      this.selectedFile = e.target.files[0]
+    },
     async storeCategory() {
-      const data = this.category
-      const formData = new FormData()
-      formData.append('name', data.name)
-      formData.append('icon', data.icon)
+      try {
+        const fd = new FormData()
+        fd.append('name', this.name)
+        fd.append('file', this.selectedFile, this.selectedFile.name)
 
-      // const param = {
-      // name: this.category.name,
-      // icon: this.category.icon,
-      // imageUrl: this.category.imageUrl,
-      // token: this.token,
-      // }
+        await this.$axios.post('admin/category', fd, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        })
 
-      await this.$store.dispatch('categories/storeCategory', data)
+        this.$toast.success('New category created successfully!')
+        this.$router.push('/products')
+      } catch (error) {
+        console.log('error: ', error)
+      }
     },
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.blank-center {
-  height: calc(100%);
-}
-</style>
->

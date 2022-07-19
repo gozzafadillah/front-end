@@ -1,13 +1,9 @@
-// import Cookies from 'js-cookie'
-// State
 export const state = () => ({
   authenticated: false,
   token: null,
   user: {},
-  // token: Cookies.get('t') || null,
 })
 
-// Getters
 export const getters = {
   isAuthenticated(state) {
     return !!state.authenticated
@@ -20,13 +16,7 @@ export const getters = {
   },
 }
 
-// Mutations
 export const mutations = {
-  // setToken(state, payload) {
-  //   console.log(payload)
-  //   state.token = payload
-  //   Cookies.set('t', state.token)
-  // },
   setToken(state, param) {
     state.token = param
   },
@@ -38,7 +28,6 @@ export const mutations = {
   },
 }
 
-// Actions
 export const actions = {
   async fetchLogin(store, payload) {
     try {
@@ -70,13 +59,11 @@ export const actions = {
     store.commit('setAuthenticated', false)
     store.commit('setToken', null)
     const notificationMessage = 'Logout Successfully, Good Bye!'
-    // show notification
     this.$toast.success(`${notificationMessage}!`, {
       position: 'top-right',
       duration: 3000,
       fitToScreen: true,
     })
-    // redirect to login
     this.$router.push('/login')
   },
 
