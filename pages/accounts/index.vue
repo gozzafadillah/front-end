@@ -1,11 +1,15 @@
 <template>
-  <div>
-    <h1>Account</h1>
-    <ul v-for="(account, index) in accounts" :key="(account.ID, index)">
-      <li>{{ account.Name }}</li>
-      <li>{{ account.Name }}</li>
-    </ul>
-  </div>
+  <v-caontainer>
+    <v-row>
+      <v-col>
+        <h1>Account</h1>
+        <ul v-for="(account, index) in accounts" :key="(account.ID, index)">
+          <li>{{ account.Name }}</li>
+          <li>{{ account.Email }}</li>
+        </ul>
+      </v-col>
+    </v-row>
+  </v-caontainer>
 </template>
 <script>
 export default {

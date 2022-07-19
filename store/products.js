@@ -10,7 +10,6 @@ export const getters = {
   countList: (state) => state.list.length,
   listByCategory: (state) => state.listByCategory,
   lengthListByCategory: (state) => state.listByCategory.length,
-  listDetailById: (state) => state.listDetailById,
   listDetailBySlug: (state) => state.listDetailBySlug,
 }
 
@@ -20,9 +19,6 @@ export const mutations = {
   },
   setListByCategory(state, param) {
     state.listByCategory = param
-  },
-  setListDetailById(state, param) {
-    state.listDetailById = param
   },
   setListDetailBySlug(state, param) {
     state.listDetailBySlug = param
