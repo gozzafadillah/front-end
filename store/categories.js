@@ -1,31 +1,23 @@
-// State
 export const state = () => ({
   list: [],
-  listById: [],
   detailById: {},
 })
 
-// Getters
 export const getters = {
   list: (state) => state.list,
-  listById: (state) => state.listById,
+  countList: (state) => state.list.length,
   detailById: (state) => state.detailById,
 }
 
-// Mutations
 export const mutations = {
   setList(state, param) {
     state.list = param
-  },
-  setListById(state, param) {
-    state.listById = param
   },
   setDetailById(state, param) {
     state.detailById = param
   },
 }
 
-// Actions
 export const actions = {
   async fetchList(store) {
     try {
@@ -38,20 +30,31 @@ export const actions = {
   async fetchListById(store, _id) {
     try {
       const response = await this.$axios.get(`category/${_id}`)
-      store.commit('setListById', response.data.result)
       store.commit('setDetailById', response.data.result)
     } catch (error) {
       console.log('error: ', error)
     }
   },
-  async storeCategory() {},
-  async updateCategory(_id) {
+  async getDetailCategory(_id) {
+    try {
+      const data = await this.$store.getters.detail(_id)
+      this.$store.commit('setDetailById', data)
+    } catch (error) {
+      console.log('error: ', error)
+    }
+  },
+  async delete(param) {
+    // console.log(id)
     try {
       const config = {
-        headers: {},
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
       }
-      const response = await this.$axios.put(`admin/category/${_id}`, config)
-      console.log('Response: ', response)
+      await this.$axios.delete('admin/category/delete/', config, {
+        param: this.ID,
+      })
+      this.$toast.success('Delete category successfully!')
     } catch (error) {
       console.log('error: ', error)
     }

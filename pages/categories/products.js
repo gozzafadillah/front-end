@@ -9,7 +9,6 @@ export const getters = {
   list: (state) => state.list,
   countList: (state) => state.list.length,
   listByCategory: (state) => state.listByCategory,
-  lengthListByCategory: (state) => state.listByCategory.length,
   listDetailById: (state) => state.listDetailById,
   listDetailBySlug: (state) => state.listDetailBySlug,
 }
@@ -43,11 +42,12 @@ export const actions = {
       const response = await this.$axios.get(`products/category/${_categoryId}`)
       if (response.data.rescode === 200) {
         store.commit('setListByCategory', response.data.result.products)
-      } else {
-        store.commit('setListByCategory', store.reset())
+      }
+      if (response.data.rescode === 400) {
+        store.commit('setListByCategory', [])
       }
     } catch (error) {
-      console.log('Error: ', error)
+      this.$toast.error('Error: ', this.response.data.message)
     }
   },
 
