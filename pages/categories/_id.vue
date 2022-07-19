@@ -1,15 +1,20 @@
 <template>
-  <div>
-    <h1>Detail category {{ id }}</h1>
-    <div>{{ detail.ID }}</div>
-    <div>{{ detail.Name }}</div>
-    <div>
-      <v-img :src="detail.Image" width="45px"> </v-img>
-    </div>
-    <div>{{ detail.Status }}</div>
-    <v-btn>Update</v-btn>
-    <v-btn @click="onClickDelet(detail.ID)">Delete</v-btn>
-  </div>
+  <v-container>
+    <v-row>
+      <v-col>
+        <v-text-file>{{ detail.ID }}</v-text-file>
+        <div>{{ detail.Name }}</div>
+        <div>
+          <v-img :src="detail.Image" width="45px"> </v-img>
+        </div>
+        <div>{{ detail.Status }}</div>
+        <v-btn>Update</v-btn>
+        <v-btn dark flat color="red" @click="onClickDelet(detail.ID)"
+          >Delete</v-btn
+        >
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 <script>
 export default {
