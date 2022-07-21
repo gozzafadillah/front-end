@@ -6,7 +6,7 @@
           <v-btn icon to="/products" class="mr-4">
             <v-icon color="#3aa2dc">mdi-arrow-left</v-icon>
           </v-btn>
-          Create New Product
+          Create New Product for Category {{ id }}
         </div>
       </v-col>
       <v-col cols="12" md="6">
@@ -35,7 +35,7 @@
             color="#3aa2dc"
             dark
             large
-            @click="storeCategory"
+            @click="storeProduct"
           >
             Add
           </v-btn>
@@ -47,7 +47,7 @@
 
 <script>
 export default {
-  name: 'CreateCategoryPage',
+  name: 'CreateProductPage',
   data() {
     return {
       name: '',
@@ -56,20 +56,25 @@ export default {
   },
   head() {
     return {
-      title: 'Create Category Page',
+      title: 'Create Product Page',
     }
+  },
+  computed: {
+    id() {
+      return this.$route.params.id
+    },
   },
   methods: {
     onFileSelected(e) {
       this.selectedFile = e.target.files[0]
     },
-    async storeCategory() {
+    async storeProduct() {
       try {
         const fd = new FormData()
         fd.append('name', this.name)
         fd.append('file', this.selectedFile, this.selectedFile.name)
 
-        await this.$axios.post('admin/category', fd, {
+        await this.$axios.post(`admin/products/${this.id}`, fd, {
           headers: {
             'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${localStorage.getItem('token')}`,
