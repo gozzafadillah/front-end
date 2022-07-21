@@ -146,7 +146,7 @@ export default {
   },
   computed: {
     countCustomers() {
-      return this.$store.getters['customers/countList']
+      return this.$store.getters['accounts/countList']
     },
     countTransactions() {
       return this.$store.getters['transactions/countList']
