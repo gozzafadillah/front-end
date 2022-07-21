@@ -216,7 +216,7 @@ export default {
 
     // customers
     async fetchListCustomers() {
-      await this.$store.dispatch('customers/fetchList')
+      await this.$store.dispatch('accounts/fetchList')
     },
 
     // transactions

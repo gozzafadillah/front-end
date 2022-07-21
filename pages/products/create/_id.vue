@@ -80,6 +80,8 @@ export default {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         })
+        this.$router.push(`/products`)
+        this.$toast.success('Product has been created')
       } catch (error) {
         console.log('error: ', error)
       }
