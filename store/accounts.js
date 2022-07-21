@@ -16,7 +16,7 @@ export const mutations = {
 export const actions = {
   async fetchList(store) {
     try {
-      const response = await this.$axios.$get('admin/users')
+      const response = await this.$axios.get('admin/users')
       store.commit('setList', response.data.result)
     } catch (error) {
       console.log('Error: ', error)

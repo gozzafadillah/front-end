@@ -44,18 +44,4 @@ export const actions = {
       console.log('error: ', error)
     }
   },
-  async delete(id) {
-    // console.log(id)
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      }
-      await this.$axios.delete(`admin/category/delete/${id}`, config)
-      this.$toast.success('Delete category successfully!')
-    } catch (error) {
-      console.log('error: ', error)
-    }
-  },
 }
