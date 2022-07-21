@@ -103,7 +103,7 @@
                   xl="1"
                   class="d-flex child-flex"
                 >
-                  <ButtonCard dark @click="newProduct" />
+                  <ButtonCard dark @click="newProduct(categoryById.ID)" />
                 </v-col>
               </v-row>
             </v-container>
@@ -146,7 +146,7 @@ export default {
   },
   computed: {
     countCustomers() {
-      return this.$store.getters['customers/countList']
+      return this.$store.getters['accounts/countList']
     },
     countTransactions() {
       return this.$store.getters['transactions/countList']
@@ -193,8 +193,8 @@ export default {
     },
 
     // products
-    newProduct() {
-      this.$router.push('/products/create')
+    newProduct(id) {
+      this.$router.push(`/products/create/${id}`)
     },
     productDetailById(id) {
       this.$router.push(`/products/${id}`)
@@ -216,7 +216,7 @@ export default {
 
     // customers
     async fetchListCustomers() {
-      await this.$store.dispatch('customers/fetchList')
+      await this.$store.dispatch('accounts/fetchList')
     },
 
     // transactions

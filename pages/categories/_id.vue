@@ -7,11 +7,11 @@
             <v-icon color="#3aa2dc">mdi-arrow-left</v-icon>
           </v-btn>
           Detail Category
+          <span class="text-capitalize">
+            {{ detail.Name }}
+          </span>
         </div>
       </v-col>
-      <v-col class="text-text-capitalize font-weight-bold"
-        >Category: {{ detail.Name }}</v-col
-      >
       <v-col cols="12" sm="10" md="8" lg="6">
         <v-card ref="form">
           <v-card-text>
@@ -63,11 +63,21 @@
               </v-tooltip>
             </v-slide-x-reverse-transition>
             <v-btn
+              dark
               color="primary"
               class="text-capitalize"
               @click="updateCetagory(detail.ID)"
-              >Update</v-btn
             >
+              Update
+            </v-btn>
+            <v-btn
+              dark
+              color="red"
+              class="text-capitalize"
+              @click="onClickDelete(detail.ID)"
+            >
+              Delete
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -99,8 +109,19 @@ export default {
     },
   },
   methods: {
-    async onClickDelet(id) {
-      await this.$store.dispatch('categories/delete', id)
+    async onClickDelete() {
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+        await this.$axios.delete(`admin/category/delete/${this.id}`, config)
+        this.$router.push('/products')
+        this.$toast.success('Delete category successfully!')
+      } catch (error) {
+        console.log('error: ', error)
+      }
     },
   },
 }
