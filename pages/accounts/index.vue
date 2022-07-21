@@ -1,15 +1,33 @@
 <template>
-  <v-caontainer>
+  <v-container class="pa-4">
     <v-row>
-      <v-col>
-        <h1>Account</h1>
-        <ul v-for="(account, index) in accounts" :key="(account.ID, index)">
-          <li>{{ account.Name }}</li>
-          <li>{{ account.Email }}</li>
-        </ul>
+      <v-col cols="12">
+        <div class="font-weight-bold">All Accounts</div>
       </v-col>
     </v-row>
-  </v-caontainer>
+    <v-row>
+      <v-col>
+        <v-data-table
+          :headers="headers"
+          :items="accounts"
+          :search="search"
+          sort-by="user"
+        >
+          <template v-slot:[`item.actions`]="{ item }">
+            <div align="center">
+              <v-icon class="text-center" small @click="detailItem(item.Name)">
+                mdi-eye
+              </v-icon>
+            </div>
+          </template>
+          <template v-slot:no-data>
+            No data found.
+            <!-- <v-btn @click="initialize">Reset</v-btn> -->
+          </template>
+        </v-data-table>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 <script>
 export default {
@@ -20,8 +38,16 @@ export default {
     }
   },
   computed: {
+    headers() {
+      return [
+        { text: 'Name', value: 'Name' },
+        { text: 'Email', value: 'Email' },
+        { text: 'Phone', value: 'Phone' },
+        { text: 'Status', value: 'Status', sortable: false },
+      ]
+    },
     accounts() {
-      return this.$store.getters['customers/list']
+      return this.$store.getters['accounts/list']
     },
   },
   mounted() {
@@ -29,7 +55,7 @@ export default {
   },
   methods: {
     async getAccounts() {
-      await this.$store.dispatch('customers/fetchList')
+      await this.$store.dispatch('accounts/fetchList')
     },
   },
 }
